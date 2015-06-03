@@ -1,0 +1,1054 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Nuve API"
+  },
+  "host" : "api.nuve.us",
+  "basePath" : "/v",
+  "tags" : [ {
+    "name" : "assets"
+  }, {
+    "name" : "orgs"
+  }, {
+    "name" : "events"
+  }, {
+    "name" : "geozones"
+  }, {
+    "name" : "authorizations"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/assets" : {
+      "get" : {
+        "tags" : [ "assets" ],
+        "summary" : "Retrieve all assets the authenticated user can access",
+        "description" : "",
+        "operationId" : "getAssets",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Assets"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "assets" ],
+        "summary" : "Create an asset",
+        "description" : "",
+        "operationId" : "createAsset",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Created asset",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AssetContainer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/AssetContainer"
+            }
+          }
+        }
+      }
+    },
+    "/assets/{id}" : {
+      "get" : {
+        "tags" : [ "assets" ],
+        "summary" : "Retrieve an asset by its identifier",
+        "description" : "",
+        "operationId" : "getAsset",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the asset",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Assets"
+            }
+          },
+          "404" : {
+            "description" : "Asset not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/assets/{id}/authorizations" : {
+      "get" : {
+        "tags" : [ "assets" ],
+        "summary" : "Retrieve the authorizations for an asset by the asset's identifier",
+        "description" : "",
+        "operationId" : "getAssetAuthorizations",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the asset",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Authorizations"
+            }
+          },
+          "404" : {
+            "description" : "Asset not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/assets/{id}/org" : {
+      "get" : {
+        "tags" : [ "assets" ],
+        "summary" : "Retrieve the organization for an asset by the asset's identifier",
+        "description" : "",
+        "operationId" : "getAssetOrg",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the asset",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Orgs"
+            }
+          },
+          "404" : {
+            "description" : "Asset not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/assets/{id}/relationships/authorizations" : {
+      "get" : {
+        "tags" : [ "assets" ],
+        "summary" : "Retrieve an asset's authorization relationships by its identifier",
+        "description" : "",
+        "operationId" : "getAssetAuthorizationRelationships",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the asset",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Relationships"
+            }
+          },
+          "404" : {
+            "description" : "Asset not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/authorizations" : {
+      "get" : {
+        "tags" : [ "authorizations" ],
+        "summary" : "Retrieve all authorizations",
+        "description" : "",
+        "operationId" : "getAuthorizations",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Authorizations"
+            }
+          }
+        }
+      }
+    },
+    "/events" : {
+      "get" : {
+        "tags" : [ "events" ],
+        "summary" : "Retrieve all location events the authenticated user can access",
+        "description" : "",
+        "operationId" : "getEvents",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/LocationEvents"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "events" ],
+        "summary" : "Create a location event or events",
+        "description" : "",
+        "operationId" : "createEvent",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Created events",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/LocationEvents"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/LocationEvents"
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}" : {
+      "get" : {
+        "tags" : [ "events" ],
+        "summary" : "Retrieve a location event by its identifier",
+        "description" : "",
+        "operationId" : "getEvent",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/LocationEvents"
+            }
+          },
+          "404" : {
+            "description" : "Event not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}/asset" : {
+      "get" : {
+        "tags" : [ "events" ],
+        "summary" : "Retrieve the asset for an event",
+        "description" : "",
+        "operationId" : "getEventAsset",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Assets"
+            }
+          },
+          "404" : {
+            "description" : "Event not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/geozones" : {
+      "get" : {
+        "tags" : [ "geozones" ],
+        "summary" : "Retrieve all geozones",
+        "description" : "",
+        "operationId" : "getGeozones",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Geozones"
+            }
+          }
+        }
+      }
+    },
+    "/geozones/{id}" : {
+      "get" : {
+        "tags" : [ "geozones" ],
+        "summary" : "Retrieve a geozone by its identifier",
+        "description" : "",
+        "operationId" : "getGeozone",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the geozone",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Geozones"
+            }
+          },
+          "404" : {
+            "description" : "Geozone not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/geozones/{id}/org" : {
+      "get" : {
+        "tags" : [ "geozones" ],
+        "summary" : "Retrieve the organization for a geozone by the geozone's identifier",
+        "description" : "",
+        "operationId" : "getGeozoneOrg",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the geozone",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Orgs"
+            }
+          },
+          "404" : {
+            "description" : "Geozone not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/orgs" : {
+      "get" : {
+        "tags" : [ "orgs" ],
+        "summary" : "Retrieve all organizations the authenticated user can access",
+        "description" : "",
+        "operationId" : "getOrgs",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Orgs"
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{id}" : {
+      "get" : {
+        "tags" : [ "orgs" ],
+        "summary" : "Retrieve an organization by its identifier",
+        "description" : "",
+        "operationId" : "getOrg",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the organization",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Orgs"
+            }
+          },
+          "404" : {
+            "description" : "Org not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Asset" : {
+      "required" : [ "classification", "name" ],
+      "properties" : {
+        "classification" : {
+          "type" : "string",
+          "description" : "Classification of the asset, what type of asset it is"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "A short, user-friendly name which will be used to display the resource to the end user"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "A user-friendly description of the resource"
+        },
+        "slug" : {
+          "type" : "string",
+          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource"
+        },
+        "tags" : {
+          "type" : "array",
+          "description" : "List of tags associated with this resource",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "permissions" : {
+          "type" : "array",
+          "description" : "Permissions which are effective for this resource",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "cd" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        },
+        "md" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
+          "readOnly" : true
+        }
+      },
+      "description" : "Attributes for an asset"
+    },
+    "AssetContainer" : {
+      "properties" : {
+        "data" : {
+          "$ref" : "#/definitions/AssetData"
+        }
+      },
+      "description" : "A single asset data container"
+    },
+    "AssetData" : {
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "object type",
+          "readOnly" : true
+        },
+        "attributes" : {
+          "description" : "Attributes for the asset",
+          "$ref" : "#/definitions/Asset"
+        },
+        "relationships" : {
+          "description" : "Relationships for the asset",
+          "readOnly" : true,
+          "$ref" : "#/definitions/AssetRelationships"
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
+          "readOnly" : true
+        }
+      },
+      "description" : "ID, type and relationships for an asset"
+    },
+    "AssetRelationships" : {
+      "properties" : {
+        "authorizations" : {
+          "description" : "Authorizations which have been configured on this asset",
+          "readOnly" : true,
+          "$ref" : "#/definitions/ManyRelationship"
+        },
+        "org" : {
+          "description" : "The organization which contains the geozone",
+          "readOnly" : true,
+          "$ref" : "#/definitions/OneRelationship"
+        }
+      },
+      "description" : "Relationships for an asset"
+    },
+    "Assets" : {
+      "properties" : {
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AssetData"
+          }
+        }
+      },
+      "description" : "A collection of asset data"
+    },
+    "Authorization" : {
+      "required" : [ "access", "permission", "status" ],
+      "properties" : {
+        "permission" : {
+          "type" : "string",
+          "description" : "Permission, for example fuel or cargo, related to the access which this authorization provides",
+          "enum" : [ "fuel", "cargo" ]
+        },
+        "access" : {
+          "type" : "string",
+          "description" : "Whether or not the permission should be granted or revoked based upon the hierarchy",
+          "enum" : [ "granted", "revoked" ]
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "The current status of the authorization, if it is still active or it has been deactivated",
+          "enum" : [ "active", "inactive" ]
+        },
+        "expiration" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The date and time at which this authorization will expire and no longer be valid"
+        },
+        "limit" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The number of times that this authorization can be utilized for access before it expires"
+        },
+        "cd" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        },
+        "md" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
+          "readOnly" : true
+        }
+      },
+      "description" : "Attributes for an Authorization"
+    },
+    "AuthorizationData" : {
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
+          "readOnly" : true
+        },
+        "attributes" : {
+          "$ref" : "#/definitions/Authorization"
+        },
+        "relationships" : {
+          "$ref" : "#/definitions/AuthorizationRelationships"
+        }
+      },
+      "description" : "ID, type and relationships for an authorization"
+    },
+    "AuthorizationRelationships" : {
+      "properties" : {
+        "parent" : {
+          "description" : "Parent for this authorization. For instance, when an asset enters a geozone a new authorizationis created, the new authorization will have the geozone-authorization as its parent.",
+          "$ref" : "#/definitions/OneRelationship"
+        },
+        "geozone" : {
+          "description" : "Geozone which this authorization is attached to. When assets enter or exit a geozone,this authorization will be used to grant or revoke access.",
+          "$ref" : "#/definitions/OneRelationship"
+        },
+        "asset" : {
+          "description" : "Asset which this authorization is attached to. When determining when the current authorizationfor an asset is, this authorization will be taken into consideration.",
+          "$ref" : "#/definitions/OneRelationship"
+        }
+      },
+      "description" : "Relationships for an authorization"
+    },
+    "Authorizations" : {
+      "properties" : {
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AuthorizationData"
+          }
+        }
+      }
+    },
+    "Cellular" : {
+      "required" : [ "sent" ],
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "description" : "Status of the cellular connection, roaming or not roaming"
+        },
+        "sent" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The date and time at which the event was sent"
+        },
+        "signal" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "The cellular signal strength in Decibel-milliwatts"
+        },
+        "carrier" : {
+          "type" : "string",
+          "description" : "Carrier of the cellular data"
+        }
+      }
+    },
+    "Error" : {
+      "properties" : {
+        "title" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Errors" : {
+      "properties" : {
+        "errors" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Error"
+          }
+        }
+      }
+    },
+    "Geozone" : {
+      "required" : [ "coordinates", "name" ],
+      "properties" : {
+        "coordinates" : {
+          "type" : "array",
+          "description" : "Coordinates for this geozone provided as a polygon in GeoJSON format",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "A short, user-friendly name which will be used to display the resource to the end user"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "A user-friendly description of the resource"
+        },
+        "slug" : {
+          "type" : "string",
+          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource"
+        },
+        "tags" : {
+          "type" : "array",
+          "description" : "List of tags associated with this resource",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "permissions" : {
+          "type" : "array",
+          "description" : "Permissions which are effective for this resource",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "cd" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        },
+        "md" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
+          "readOnly" : true
+        }
+      },
+      "description" : "Attributes for a geozone"
+    },
+    "GeozoneData" : {
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "object type",
+          "readOnly" : true
+        },
+        "attributes" : {
+          "description" : "Attributes for the geozone",
+          "$ref" : "#/definitions/Geozone"
+        },
+        "relationships" : {
+          "description" : "Relationships for the geozone",
+          "readOnly" : true,
+          "$ref" : "#/definitions/GeozoneRelationships"
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
+          "readOnly" : true
+        }
+      },
+      "description" : "Area in which different authorizations can be provided for assets"
+    },
+    "GeozoneRelationships" : {
+      "properties" : {
+        "authorizations" : {
+          "description" : "Authorizations which have been configured on this geozone",
+          "readOnly" : true,
+          "$ref" : "#/definitions/ManyRelationship"
+        },
+        "org" : {
+          "description" : "The organization which contains the geozone",
+          "readOnly" : true,
+          "$ref" : "#/definitions/OneRelationship"
+        }
+      },
+      "description" : "Relationships for a geozone"
+    },
+    "Geozones" : {
+      "properties" : {
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/GeozoneData"
+          }
+        }
+      }
+    },
+    "Gps" : {
+      "required" : [ "fixTime" ],
+      "properties" : {
+        "hdop" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "The GPS horizontal dilution of precision"
+        },
+        "fixTime" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The date and time at which the GPS fix was acquired"
+        },
+        "satellites" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The number of satellites used to acquire a GPS fix."
+        }
+      }
+    },
+    "Location" : {
+      "required" : [ "coordinates" ],
+      "properties" : {
+        "speed" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
+        },
+        "coordinates" : {
+          "type" : "array",
+          "description" : "Coordinates for this events provided as a point in GeoJSON format",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        },
+        "heading" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Heading of the asset, represented as degrees from true north"
+        }
+      }
+    },
+    "LocationEvent" : {
+      "required" : [ "location" ],
+      "properties" : {
+        "location" : {
+          "description" : "Location, speed and heading of the asset at the time this event",
+          "$ref" : "#/definitions/Location"
+        },
+        "gps" : {
+          "description" : "When originating from a GPS device, contains information about the GPS lock",
+          "$ref" : "#/definitions/Gps"
+        },
+        "cellular" : {
+          "description" : "When originating from a device with a cellular modem, contains information about the cellular connection",
+          "$ref" : "#/definitions/Cellular"
+        },
+        "metrics" : {
+          "type" : "object",
+          "description" : "Key/value metrics for an event",
+          "additionalProperties" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        },
+        "cd" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        },
+        "md" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
+          "readOnly" : true
+        }
+      }
+    },
+    "LocationEventData" : {
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
+          "readOnly" : true
+        },
+        "attributes" : {
+          "$ref" : "#/definitions/LocationEvent"
+        },
+        "relationships" : {
+          "$ref" : "#/definitions/LocationEventRelationships"
+        }
+      }
+    },
+    "LocationEventRelationships" : {
+      "required" : [ "asset" ],
+      "properties" : {
+        "operator" : {
+          "description" : "The operator, in the case of a truck, the driver, for this asset",
+          "$ref" : "#/definitions/OneRelationship"
+        },
+        "asset" : {
+          "description" : "The asset which generated this event",
+          "$ref" : "#/definitions/OneRelationship"
+        }
+      }
+    },
+    "LocationEvents" : {
+      "properties" : {
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LocationEventData"
+          }
+        }
+      },
+      "description" : "A collection of location event data"
+    },
+    "ManyRelationship" : {
+      "properties" : {
+        "data" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/ResourceData"
+          }
+        },
+        "links" : {
+          "description" : "Links for this relationship",
+          "$ref" : "#/definitions/RelationshipLinks"
+        }
+      },
+      "description" : "Represents a relationship between one entity to one to many other entities."
+    },
+    "OneRelationship" : {
+      "properties" : {
+        "data" : {
+          "description" : "Resource for the relationship",
+          "$ref" : "#/definitions/ResourceData"
+        },
+        "links" : {
+          "description" : "Links for this relationship",
+          "$ref" : "#/definitions/RelationshipLinks"
+        }
+      },
+      "description" : "Represents a relationship between two different entities."
+    },
+    "Org" : {
+      "required" : [ "name" ],
+      "properties" : {
+        "assets" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Number of assets belonging to this organization",
+          "readOnly" : true
+        },
+        "geozones" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Number of geozones belonging to this organization",
+          "readOnly" : true
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "A short, user-friendly name which will be used to display the resource to the end user"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "A user-friendly description of the resource"
+        },
+        "slug" : {
+          "type" : "string",
+          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource"
+        },
+        "cd" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        },
+        "md" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
+          "readOnly" : true
+        }
+      },
+      "description" : "Attributes for an organization"
+    },
+    "OrgData" : {
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "object type",
+          "readOnly" : true
+        },
+        "links" : {
+          "description" : "Link to retrieve this organization",
+          "$ref" : "#/definitions/SelfLink"
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
+          "readOnly" : true
+        },
+        "attributes" : {
+          "$ref" : "#/definitions/Org"
+        }
+      },
+      "description" : "An organization which contains assets, geozones, and users"
+    },
+    "Orgs" : {
+      "properties" : {
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OrgData"
+          }
+        }
+      }
+    },
+    "RelationshipLinks" : {
+      "properties" : {
+        "related" : {
+          "type" : "string",
+          "description" : "Related link for the relationship"
+        },
+        "self" : {
+          "type" : "string",
+          "description" : "Self link for the relationship"
+        }
+      },
+      "description" : "Links for a relationship."
+    },
+    "Relationships" : {
+      "properties" : {
+        "links" : {
+          "$ref" : "#/definitions/RelationshipLinks"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ResourceData"
+          }
+        }
+      }
+    },
+    "ResourceData" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
+          "readOnly" : true
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "object type",
+          "readOnly" : true
+        }
+      }
+    },
+    "SelfLink" : {
+      "properties" : {
+        "self" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
