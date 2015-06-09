@@ -52,6 +52,31 @@ standard HTTP verbs, and return standard HTTP status codes to indicate success o
 
 <p>JSON encoding is used for request and response payloads.</p>
 
+<h2 id="response-format">Response format</h2>
+
+<blockquote>
+<p>A successful request and response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>A problem with the request or response</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>All JSON response formats take has one of the following root elements:</p>
+
+<ul>
+<li><code class="prettyprint">data</code>: indicates a successful request and response. The data attribute will contain the requested resource(s).</li>
+<li><code class="prettyprint">error</code>: indicates a problem with the request or the server encountered an issue generating the response. See <a href="#errors">errors</a> for more info.</li>
+</ul>
+
 <h2 id="date-&amp;-time">Date &amp; time</h2>
 
 <p>Date and time are specified and returned in ISO 8601 format:</p>
@@ -77,13 +102,19 @@ which specifies longitude, latitude and altitude.</p>
 
 <p><code class="prettyprint">[45.850875, -84.62456, 657.95]</code></p>
 
+<h1 id="api-schema">API schema</h1>
+
+<p>The Nuve API has a schema provided in <a href="http://swagger.io/">Swagger</a> format. The schema can be utilized
+to generate API clients in many different languages utilizing the <a href="http://editor.swagger.io/">Swagger Editor</a>. Additional
+API endpoints are also available, above and beyond what is disccused in this documentation, and available for browsing <a href="/schema.html">here</a>.</p>
+
 <h1 id="authentication">Authentication</h1>
 
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
 <pre class="highlight shell"><code>curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: nuve.api.token"</span>
+  -u <span class="s2">"nuve.api.token:"</span>
 </code></pre>
 
 <blockquote>
@@ -108,11 +139,18 @@ You must replace <code>nuve.api.token</code> with your Nuve API token.
 
 <h2 id="get-all-events">Get all events</h2>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.nuve.us/v/events"</span>
-  -H <span class="s2">"Authorization: nuve.api.token"</span>
+  -u <span class="s2">"nuve.api.token:"</span>
 </code></pre>
 
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Filter the returned events by an asset with ID <code class="prettyprint">1</code>:</p>
+</blockquote>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.nuve.us/v/events?filter[asset]=1"</span>
+  -u <span class="s2">"nuve.api.token:"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured as follows:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -120,6 +158,7 @@ You must replace <code>nuve.api.token</code> with your Nuve API token.
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"location"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"generated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-03T22:56:14.256Z"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">45.850875</span><span class="p">,</span><span class="w"> </span><span class="mf">-84.62456</span><span class="p">]</span><span class="w">
         </span><span class="p">},</span><span class="w">
@@ -129,13 +168,12 @@ You must replace <code>nuve.api.token</code> with your Nuve API token.
         </span><span class="s2">"metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"nuve.fuel.left"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
         </span><span class="p">},</span><span class="w">
-        </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-03T22:56:14.148Z"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-03T22:56:14.148Z"</span><span class="w">
+        </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-03T22:56:14.148Z"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="s2">"relationships"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/events/1/asset"</span><span class="w">
+            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/v/events/1/asset"</span><span class="w">
           </span><span class="p">},</span><span class="w">
           </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asset"</span><span class="p">,</span><span class="w">
@@ -175,11 +213,11 @@ only include particular assets over a particular time period.</p>
 
 <h2 id="get-a-specific-event">Get a specific event</h2>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.nuve.us/v/events/3"</span>
-  -H <span class="s2">"Authorization: nuve.api.token"</span>
+  -u <span class="s2">"nuve.api.token:"</span>
 </code></pre>
 
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>The above commands returns JSON structured as follows:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -187,6 +225,7 @@ only include particular assets over a particular time period.</p>
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"location"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"generated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-03T22:56:14.256Z"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">45.850875</span><span class="p">,</span><span class="w"> </span><span class="mf">-84.62456</span><span class="p">]</span><span class="w">
         </span><span class="p">},</span><span class="w">
@@ -202,7 +241,7 @@ only include particular assets over a particular time period.</p>
       </span><span class="s2">"relationships"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/events/1/asset"</span><span class="w">
+            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/v/events/1/asset"</span><span class="w">
           </span><span class="p">},</span><span class="w">
           </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asset"</span><span class="p">,</span><span class="w">
@@ -241,6 +280,7 @@ only include particular assets over a particular time period.</p>
     "data": [
       {
         "attributes": {
+          "generated": "2015-06-03T22:56:14.256Z",
           "location": {
             "coordinates": [45.850875, -84.62456],
             "speed": 45.6,
@@ -265,7 +305,7 @@ only include particular assets over a particular time period.</p>
     ]
 }'</span> <span class="se">\</span>
 -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
--H <span class="s2">"Authorization: nuve.api.token"</span> <span class="se">\</span>
+-u <span class="s2">"nuve.api.token:"</span> <span class="se">\</span>
 -X POST https://api.nuve.us/v/events
 </code></pre>
 
@@ -278,6 +318,7 @@ only include particular assets over a particular time period.</p>
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"location"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"generated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-06-03T22:56:14.256Z"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"coordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">45.850875</span><span class="p">,</span><span class="w"> </span><span class="mf">-84.62456</span><span class="p">],</span><span class="w">
           </span><span class="s2">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mf">45.6</span><span class="p">,</span><span class="w">
@@ -295,7 +336,7 @@ only include particular assets over a particular time period.</p>
       </span><span class="s2">"relationships"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/events/1/asset"</span><span class="w">
+            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/v/events/1/asset"</span><span class="w">
           </span><span class="p">},</span><span class="w">
           </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asset"</span><span class="p">,</span><span class="w">
@@ -323,6 +364,18 @@ an asset be provided</p>
 
 <p>If the data originates from a GPS device, <code class="prettyprint">gps</code> attributes should be included. If the data was sent over a cellular
 connection, <code class="prettyprint">cellular</code> attributes should be included.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>generated</td>
+<td>The <a href="#date-&amp;-time">date and time</a> at which the event was generated</td>
+</tr>
+</tbody></table>
 
 <h4 id="location-attributes">Location attributes</h4>
 
@@ -377,10 +430,6 @@ connection, <code class="prettyprint">cellular</code> attributes should be inclu
 </tr>
 </thead><tbody>
 <tr>
-<td>cellular.sent</td>
-<td>The <a href="#date-&amp;-time">date and time</a> at which the data was sent by the device</td>
-</tr>
-<tr>
 <td>cellular.signal</td>
 <td>The cellular signal strength in Decibel-milliwatts</td>
 </tr>
@@ -419,6 +468,14 @@ not:</p>
 <td>Level of the Nuve battery in volts</td>
 </tr>
 <tr>
+<td>nuve.bolt.{id}</td>
+<td>Status of the Nuve cargo bolt, with the given identifier: <code class="prettyprint">nuve.bolt.0</code></td>
+</tr>
+<tr>
+<td>nuve.lock.{id}</td>
+<td>Status of the Nuve cargo lock permission, a value of <code class="prettyprint">1</code> indicating permission is granted <code class="prettyprint">0</code> meaning permission is not granted</td>
+</tr>
+<tr>
 <td>ignition</td>
 <td>Status of the vehicle ignition</td>
 </tr>
@@ -440,7 +497,7 @@ not:</p>
 
 <h2 id="get-all-assets">Get all assets</h2>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.nuve.us/v/assets"</span>
-  -H <span class="s2">"Authorization: nuve.api.token"</span>
+  -u <span class="s2">"nuve.api.token:"</span>
 </code></pre>
 
 <blockquote>
@@ -464,7 +521,7 @@ not:</p>
       </span><span class="s2">"relationships"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"authorizations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/assets/1/authorizations"</span><span class="w">
+            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/v/assets/1/authorizations"</span><span class="w">
           </span><span class="p">},</span><span class="w">
           </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
             </span><span class="p">{</span><span class="w">
@@ -475,7 +532,7 @@ not:</p>
         </span><span class="p">},</span><span class="w">
         </span><span class="s2">"org"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/assets/1/org"</span><span class="w">
+            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/v/assets/1/org"</span><span class="w">
           </span><span class="p">},</span><span class="w">
           </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org"</span><span class="p">,</span><span class="w">
@@ -511,7 +568,7 @@ under your organization.</p>
 
 <h2 id="get-a-specific-asset">Get a specific asset</h2>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.nuve.us/v/assets/3"</span>
-  -H <span class="s2">"Authorization: nuve.api.token"</span>
+  -u <span class="s2">"nuve.api.token:"</span>
 </code></pre>
 
 <blockquote>
@@ -535,7 +592,7 @@ under your organization.</p>
       </span><span class="s2">"relationships"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"authorizations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/assets/3/authorizations"</span><span class="w">
+            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/v/assets/3/authorizations"</span><span class="w">
           </span><span class="p">},</span><span class="w">
           </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
             </span><span class="p">{</span><span class="w">
@@ -546,7 +603,7 @@ under your organization.</p>
         </span><span class="p">},</span><span class="w">
         </span><span class="s2">"org"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/assets/3/org"</span><span class="w">
+            </span><span class="s2">"related"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.nuve.us/v/assets/3/org"</span><span class="w">
           </span><span class="p">},</span><span class="w">
           </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org"</span><span class="p">,</span><span class="w">
@@ -603,7 +660,7 @@ under your organization.</p>
 </tr>
 <tr>
 <td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a resource with an invalid method</td>
+<td>Method Not Allowed &ndash; A resource was access with an invalid method</td>
 </tr>
 <tr>
 <td>406</td>
