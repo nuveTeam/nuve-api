@@ -1,2141 +1,2214 @@
 {
-  "swagger" : "2.0",
-  "info" : {
-    "version" : "0.2",
-    "title" : "Nuve API"
-  },
-  "host" : "api.nuve.us",
-  "basePath" : "/v",
-  "tags" : [ {
-    "name" : "geozones"
-  }, {
-    "name" : "orgs"
-  }, {
-    "name" : "authorizations"
-  }, {
-    "name" : "analyses"
-  }, {
-    "name" : "assets"
-  }, {
-    "name" : "events"
-  }, {
-    "name" : "policies"
-  }, {
-    "name" : "activations"
-  } ],
-  "schemes" : [ "https" ],
-  "paths" : {
-    "/activations" : {
-      "get" : {
-        "tags" : [ "activations" ],
-        "summary" : "Retrieve all activations the authenticated user can access",
-        "description" : "",
-        "operationId" : "getActivations",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Activations"
-            }
-          }
-        }
-      }
+    "swagger": "2.0",
+    "info": {
+        "version": "0.2",
+        "title": "Nuve API"
     },
-    "/activations/{id}" : {
-      "get" : {
-        "tags" : [ "activations" ],
-        "summary" : "Retrieve an activation given its identifier",
-        "description" : "",
-        "operationId" : "getActivation",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Activations"
-            }
-          },
-          "404" : {
-            "description" : "Activation not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/activations/{id}/analyses" : {
-      "get" : {
-        "tags" : [ "activations" ],
-        "summary" : "Retrieve an activation's analyses given its identifier",
-        "description" : "",
-        "operationId" : "getActivationAnalyses",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Analyses"
-            }
-          },
-          "404" : {
-            "description" : "Activation not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/activations/{id}/event" : {
-      "get" : {
-        "tags" : [ "activations" ],
-        "summary" : "Retrieve an activation's events given its identifier",
-        "description" : "",
-        "operationId" : "getActivationEvent",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/LocationEvents"
-            }
-          },
-          "404" : {
-            "description" : "Activation not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/analyses" : {
-      "get" : {
-        "tags" : [ "analyses" ],
-        "summary" : "Retrieve all analyses the authenticated user can access",
-        "description" : "",
-        "operationId" : "getAnalyses",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Analyses"
-            }
-          }
-        }
-      }
-    },
-    "/analyses/{id}" : {
-      "get" : {
-        "tags" : [ "analyses" ],
-        "summary" : "Retrieve an analysis by its identifier",
-        "description" : "",
-        "operationId" : "getAnalysis",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the analysis",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Analyses"
-            }
-          },
-          "404" : {
-            "description" : "Analysis not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/analyses/{id}/activations" : {
-      "get" : {
-        "tags" : [ "analyses" ],
-        "summary" : "Retrieve an analysis' activation given the identifier of the analysis",
-        "description" : "",
-        "operationId" : "getAnalysisActivations",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the analysis",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Activations"
-            }
-          },
-          "404" : {
-            "description" : "Analysis not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/analyses/{id}/asset" : {
-      "get" : {
-        "tags" : [ "analyses" ],
-        "summary" : "Retrieve an analysis' asset by the identifier of the analysis",
-        "description" : "",
-        "operationId" : "getAnalysisAsset",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the analysis",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Assets"
-            }
-          },
-          "404" : {
-            "description" : "Analysis not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/assets" : {
-      "get" : {
-        "tags" : [ "assets" ],
-        "summary" : "Retrieve all assets the authenticated user can access",
-        "description" : "",
-        "operationId" : "getAssets",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Assets"
-            }
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "assets" ],
-        "summary" : "Create an asset",
-        "description" : "",
-        "operationId" : "createAsset",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "description" : "Created asset",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/AssetContainer"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/AssetContainer"
-            }
-          }
-        }
-      }
-    },
-    "/assets/{id}" : {
-      "get" : {
-        "tags" : [ "assets" ],
-        "summary" : "Retrieve an asset by its identifier",
-        "description" : "",
-        "operationId" : "getAsset",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the asset",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Assets"
-            }
-          },
-          "404" : {
-            "description" : "Asset not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/assets/{id}/authorizations" : {
-      "get" : {
-        "tags" : [ "assets" ],
-        "summary" : "Retrieve the authorizations for an asset by the asset's identifier",
-        "description" : "",
-        "operationId" : "getAssetAuthorizations",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the asset",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Authorizations"
-            }
-          },
-          "404" : {
-            "description" : "Asset not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "assets" ],
-        "summary" : "Create an authorization for an asset",
-        "description" : "",
-        "operationId" : "createAuthorization",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the asset",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "404" : {
-            "description" : "Asset not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          },
-          "422" : {
-            "description" : "Authorization is invalid and could not be created",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/assets/{id}/org" : {
-      "get" : {
-        "tags" : [ "assets" ],
-        "summary" : "Retrieve the organization for an asset by the asset's identifier",
-        "description" : "",
-        "operationId" : "getAssetOrg",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the asset",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Orgs"
-            }
-          },
-          "404" : {
-            "description" : "Asset not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/authorizations" : {
-      "get" : {
-        "tags" : [ "authorizations" ],
-        "summary" : "Retrieve all authorizations",
-        "description" : "",
-        "operationId" : "getAuthorizations",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Authorizations"
-            }
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "authorizations" ],
-        "summary" : "Create authorizations",
-        "description" : "",
-        "operationId" : "createAuthorizations",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "422" : {
-            "description" : "One or more authorizations is invalid and could not be created",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/authorizations/{id}" : {
-      "get" : {
-        "tags" : [ "authorizations" ],
-        "summary" : "Retrieve an authorization by its identifier",
-        "description" : "",
-        "operationId" : "getAuthorization",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the authorization",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Authorizations"
-            }
-          },
-          "404" : {
-            "description" : "Authorization not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      },
-      "delete" : {
-        "tags" : [ "authorizations" ],
-        "summary" : "Delete an authorization by its identifier",
-        "description" : "",
-        "operationId" : "deleteAuthorization",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the authorization",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "404" : {
-            "description" : "Authorization not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/authorizations/{id}/asset" : {
-      "get" : {
-        "tags" : [ "authorizations" ],
-        "summary" : "Retrieve the asset related to an authorization",
-        "description" : "",
-        "operationId" : "getAuthorizationAsset",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the authorization",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Assets"
-            }
-          },
-          "404" : {
-            "description" : "Authorization not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/authorizations/{id}/policy" : {
-      "get" : {
-        "tags" : [ "authorizations" ],
-        "summary" : "Retrieve the policy which created an authorization by the authorization's identifier",
-        "description" : "",
-        "operationId" : "getAuthorizationPolicy",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the authorization",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Policies"
-            }
-          },
-          "404" : {
-            "description" : "Authorization not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/events" : {
-      "get" : {
-        "tags" : [ "events" ],
-        "summary" : "Retrieve all location events the authenticated user can access",
-        "description" : "",
-        "operationId" : "getEvents",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "filter[asset]",
-          "in" : "query",
-          "description" : "IDs of assets which will be represented in the response",
-          "required" : false,
-          "type" : "array",
-          "collectionFormat" : "multi"
+    "host": "api.nuve.us",
+    "basePath": "/v",
+    "tags": [
+        {
+            "name": "geozones"
         }, {
-          "name" : "filter[generated]",
-          "in" : "query",
-          "description" : "ISO-8601 based interval for the time period, based upon the generated date and time of the event, over which to retrieve events",
-          "required" : false,
-          "type" : "string"
+            "name": "orgs"
         }, {
-          "name" : "filter[created]",
-          "in" : "query",
-          "description" : "ISO-8601 based interval for the time period, based upon the creation date and time, over which to retrieve events",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/LocationEvents"
-            }
-          },
-          "400" : {
-            "description" : "Interval invalid",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "events" ],
-        "summary" : "Create a location event or events",
-        "description" : "",
-        "operationId" : "createEvent",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "description" : "Created events",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/LocationEvents"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/LocationEvents"
-            }
-          },
-          "422" : {
-            "description" : "Invalid events",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/events/{id}" : {
-      "get" : {
-        "tags" : [ "events" ],
-        "summary" : "Retrieve a location event by its identifier",
-        "description" : "",
-        "operationId" : "getEvent",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/LocationEvents"
-            }
-          },
-          "404" : {
-            "description" : "Event not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/events/{id}/asset" : {
-      "get" : {
-        "tags" : [ "events" ],
-        "summary" : "Retrieve the asset for an event",
-        "description" : "",
-        "operationId" : "getEventAsset",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Unique ID of the event to retrieve",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Assets"
-            }
-          },
-          "404" : {
-            "description" : "Event not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/geozones" : {
-      "get" : {
-        "tags" : [ "geozones" ],
-        "summary" : "Retrieve all geozones",
-        "description" : "",
-        "operationId" : "getGeozones",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Geozones"
-            }
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "geozones" ],
-        "summary" : "Create geozones",
-        "description" : "",
-        "operationId" : "createGeozones",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "description" : "Newly created geozones",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/Geozones"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Geozones"
-            }
-          },
-          "422" : {
-            "description" : "One or more geozones is invalid and could not be created",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/geozones/{id}" : {
-      "get" : {
-        "tags" : [ "geozones" ],
-        "summary" : "Retrieve a geozone by its identifier",
-        "description" : "",
-        "operationId" : "getGeozone",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the geozone",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Geozones"
-            }
-          },
-          "404" : {
-            "description" : "Geozone not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      },
-      "put" : {
-        "tags" : [ "geozones" ],
-        "summary" : "Update a geozone by its identifier",
-        "description" : "",
-        "operationId" : "updateGeozone",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the geozone",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Geozones"
-            }
-          },
-          "404" : {
-            "description" : "Geozone not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      },
-      "delete" : {
-        "tags" : [ "geozones" ],
-        "summary" : "Delete a geozone by its identifier",
-        "description" : "",
-        "operationId" : "deleteGeozone",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the geozone",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "404" : {
-            "description" : "Geozone not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/geozones/{id}/org" : {
-      "get" : {
-        "tags" : [ "geozones" ],
-        "summary" : "Retrieve the organization for a geozone by the geozone's identifier",
-        "description" : "",
-        "operationId" : "getGeozoneOrg",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the geozone",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Orgs"
-            }
-          },
-          "404" : {
-            "description" : "Geozone not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/geozones/{id}/policies" : {
-      "get" : {
-        "tags" : [ "geozones" ],
-        "summary" : "Retrieve the policies for a geozone by the geozone's identifier",
-        "description" : "",
-        "operationId" : "getGeozonePolicies",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the geozone",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Policies"
-            }
-          },
-          "404" : {
-            "description" : "Geozone not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/orgs" : {
-      "get" : {
-        "tags" : [ "orgs" ],
-        "summary" : "Retrieve all organizations the authenticated user can access",
-        "description" : "",
-        "operationId" : "getOrgs",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Orgs"
-            }
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "orgs" ],
-        "summary" : "Create new organizations",
-        "description" : "",
-        "operationId" : "createOrgs",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Orgs"
-            }
-          },
-          "422" : {
-            "description" : "Invalid organizations",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/orgs/{id}" : {
-      "get" : {
-        "tags" : [ "orgs" ],
-        "summary" : "Retrieve an organization by its identifier",
-        "description" : "",
-        "operationId" : "getOrg",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the organization",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Orgs"
-            }
-          },
-          "404" : {
-            "description" : "Org not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/orgs/{id}/children" : {
-      "get" : {
-        "tags" : [ "orgs" ],
-        "summary" : "Retrieve an organization's children by its identifier",
-        "description" : "",
-        "operationId" : "getOrgChildren",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the organization",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Orgs"
-            }
-          },
-          "404" : {
-            "description" : "Org not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/orgs/{id}/parent" : {
-      "get" : {
-        "tags" : [ "orgs" ],
-        "summary" : "Retrieve an organization's parent by its identifier",
-        "description" : "",
-        "operationId" : "getOrgParent",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the organization",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Orgs"
-            }
-          },
-          "404" : {
-            "description" : "Org not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/policies" : {
-      "get" : {
-        "tags" : [ "policies" ],
-        "summary" : "Retrieve all policies",
-        "description" : "",
-        "operationId" : "getPolicies",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "filter[geozone]",
-          "in" : "query",
-          "description" : "Identifiers of geozones which will have their policies represented in the response",
-          "required" : false,
-          "type" : "array",
-          "collectionFormat" : "multi"
+            "name": "authorizations"
         }, {
-          "name" : "filter[permission]",
-          "in" : "query",
-          "description" : "Permission types which will be represented in the response",
-          "required" : false,
-          "type" : "array",
-          "collectionFormat" : "multi",
-          "enum" : [ "cargo", "fuel" ]
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Policies"
-            }
-          }
+            "name": "analyses"
+        }, {
+            "name": "assets"
+        }, {
+            "name": "events"
+        }, {
+            "name": "policies"
+        }, {
+            "name": "activations"
         }
-      },
-      "post" : {
-        "tags" : [ "policies" ],
-        "summary" : "Create a policy or policies for a geozone",
-        "description" : "",
-        "operationId" : "createPolicies",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "description" : "Newly created policies",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/Policies"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Policies"
+    ],
+    "schemes": ["https"],
+    "paths": {
+        "/activations": {
+            "get": {
+                "tags": ["activations"],
+                "summary": "Retrieve all activations the authenticated user can access",
+                "description": "",
+                "operationId": "getActivations",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Activations"
+                        }
+                    }
+                }
             }
-          },
-          "422" : {
-            "description" : "One or more policies is invalid and could not be created",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
+        },
+        "/activations/{id}": {
+            "get": {
+                "tags": ["activations"],
+                "summary": "Retrieve an activation given its identifier",
+                "description": "",
+                "operationId": "getActivation",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Activations"
+                        }
+                    },
+                    "404": {
+                        "description": "Activation not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
             }
-          }
+        },
+        "/activations/{id}/analyses": {
+            "get": {
+                "tags": ["activations"],
+                "summary": "Retrieve an activation's analyses given its identifier",
+                "description": "",
+                "operationId": "getActivationAnalyses",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Analyses"
+                        }
+                    },
+                    "404": {
+                        "description": "Activation not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/activations/{id}/event": {
+            "get": {
+                "tags": ["activations"],
+                "summary": "Retrieve an activation's events given its identifier",
+                "description": "",
+                "operationId": "getActivationEvent",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/LocationEvents"
+                        }
+                    },
+                    "404": {
+                        "description": "Activation not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/analyses": {
+            "get": {
+                "tags": ["analyses"],
+                "summary": "Retrieve all analyses the authenticated user can access",
+                "description": "",
+                "operationId": "getAnalyses",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Analyses"
+                        }
+                    }
+                }
+            }
+        },
+        "/analyses/{id}": {
+            "get": {
+                "tags": ["analyses"],
+                "summary": "Retrieve an analysis by its identifier",
+                "description": "",
+                "operationId": "getAnalysis",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the analysis",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Analyses"
+                        }
+                    },
+                    "404": {
+                        "description": "Analysis not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/analyses/{id}/activations": {
+            "get": {
+                "tags": ["analyses"],
+                "summary": "Retrieve an analysis' activation given the identifier of the analysis",
+                "description": "",
+                "operationId": "getAnalysisActivations",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the analysis",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Activations"
+                        }
+                    },
+                    "404": {
+                        "description": "Analysis not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/analyses/{id}/asset": {
+            "get": {
+                "tags": ["analyses"],
+                "summary": "Retrieve an analysis' asset by the identifier of the analysis",
+                "description": "",
+                "operationId": "getAnalysisAsset",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the analysis",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Assets"
+                        }
+                    },
+                    "404": {
+                        "description": "Analysis not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets": {
+            "get": {
+                "tags": ["assets"],
+                "summary": "Retrieve all assets the authenticated user can access",
+                "description": "",
+                "operationId": "getAssets",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Assets"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["assets"],
+                "summary": "Create an asset",
+                "description": "",
+                "operationId": "createAsset",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created asset",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/AssetContainer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/AssetContainer"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/{id}": {
+            "get": {
+                "tags": ["assets"],
+                "summary": "Retrieve an asset by its identifier",
+                "description": "",
+                "operationId": "getAsset",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the asset",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Assets"
+                        }
+                    },
+                    "404": {
+                        "description": "Asset not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/{id}/authorizations": {
+            "get": {
+                "tags": ["assets"],
+                "summary": "Retrieve the authorizations for an asset by the asset's identifier",
+                "description": "",
+                "operationId": "getAssetAuthorizations",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the asset",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Authorizations"
+                        }
+                    },
+                    "404": {
+                        "description": "Asset not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["assets"],
+                "summary": "Create an authorization for an asset",
+                "description": "",
+                "operationId": "createAuthorization",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the asset",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Asset not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    },
+                    "422": {
+                        "description": "Authorization is invalid and could not be created",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/{id}/org": {
+            "get": {
+                "tags": ["assets"],
+                "summary": "Retrieve the organization for an asset by the asset's identifier",
+                "description": "",
+                "operationId": "getAssetOrg",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the asset",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Orgs"
+                        }
+                    },
+                    "404": {
+                        "description": "Asset not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/authorizations": {
+            "get": {
+                "tags": ["authorizations"],
+                "summary": "Retrieve all authorizations",
+                "description": "",
+                "operationId": "getAuthorizations",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Authorizations"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["authorizations"],
+                "summary": "Create authorizations",
+                "description": "",
+                "operationId": "createAuthorizations",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "responses": {
+                    "422": {
+                        "description": "One or more authorizations is invalid and could not be created",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/authorizations/{id}": {
+            "get": {
+                "tags": ["authorizations"],
+                "summary": "Retrieve an authorization by its identifier",
+                "description": "",
+                "operationId": "getAuthorization",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the authorization",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Authorizations"
+                        }
+                    },
+                    "404": {
+                        "description": "Authorization not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["authorizations"],
+                "summary": "Delete an authorization by its identifier",
+                "description": "",
+                "operationId": "deleteAuthorization",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the authorization",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Authorization not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/authorizations/{id}/asset": {
+            "get": {
+                "tags": ["authorizations"],
+                "summary": "Retrieve the asset related to an authorization",
+                "description": "",
+                "operationId": "getAuthorizationAsset",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the authorization",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Assets"
+                        }
+                    },
+                    "404": {
+                        "description": "Authorization not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/authorizations/{id}/policy": {
+            "get": {
+                "tags": ["authorizations"],
+                "summary": "Retrieve the policy which created an authorization by the authorization's identifier",
+                "description": "",
+                "operationId": "getAuthorizationPolicy",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the authorization",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Policies"
+                        }
+                    },
+                    "404": {
+                        "description": "Authorization not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/events": {
+            "get": {
+                "tags": ["events"],
+                "summary": "Retrieve all location events the authenticated user can access",
+                "description": "",
+                "operationId": "getEvents",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "filter[asset]",
+                        "in": "query",
+                        "description": "IDs of assets which will be represented in the response",
+                        "required": false,
+                        "type": "array",
+                        "collectionFormat": "multi",
+                        "items": {
+                            "type": "string"
+                        }
+                    }, {
+                        "name": "filter[generated]",
+                        "in": "query",
+                        "description": "ISO-8601 based interval for the time period, based upon the generated date and time of the event, over which to retrieve events",
+                        "required": false,
+                        "type": "string"
+                    }, {
+                        "name": "filter[created]",
+                        "in": "query",
+                        "description": "ISO-8601 based interval for the time period, based upon the creation date and time, over which to retrieve events",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/LocationEvents"
+                        }
+                    },
+                    "400": {
+                        "description": "Interval invalid",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["events"],
+                "summary": "Create a location event or events",
+                "description": "",
+                "operationId": "createEvent",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created events",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/LocationEvents"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/LocationEvents"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid events",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{id}": {
+            "get": {
+                "tags": ["events"],
+                "summary": "Retrieve a location event by its identifier",
+                "description": "",
+                "operationId": "getEvent",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/LocationEvents"
+                        }
+                    },
+                    "404": {
+                        "description": "Event not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{id}/asset": {
+            "get": {
+                "tags": ["events"],
+                "summary": "Retrieve the asset for an event",
+                "description": "",
+                "operationId": "getEventAsset",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique ID of the event to retrieve",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Assets"
+                        }
+                    },
+                    "404": {
+                        "description": "Event not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/geozones": {
+            "get": {
+                "tags": ["geozones"],
+                "summary": "Retrieve all geozones",
+                "description": "",
+                "operationId": "getGeozones",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Geozones"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["geozones"],
+                "summary": "Create geozones",
+                "description": "",
+                "operationId": "createGeozones",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Newly created geozones",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Geozones"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Geozones"
+                        }
+                    },
+                    "422": {
+                        "description": "One or more geozones is invalid and could not be created",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/geozones/{id}": {
+            "get": {
+                "tags": ["geozones"],
+                "summary": "Retrieve a geozone by its identifier",
+                "description": "",
+                "operationId": "getGeozone",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the geozone",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Geozones"
+                        }
+                    },
+                    "404": {
+                        "description": "Geozone not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["geozones"],
+                "summary": "Update a geozone by its identifier",
+                "description": "",
+                "operationId": "updateGeozone",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the geozone",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Geozones"
+                        }
+                    },
+                    "404": {
+                        "description": "Geozone not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["geozones"],
+                "summary": "Delete a geozone by its identifier",
+                "description": "",
+                "operationId": "deleteGeozone",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the geozone",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Geozone not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/geozones/{id}/org": {
+            "get": {
+                "tags": ["geozones"],
+                "summary": "Retrieve the organization for a geozone by the geozone's identifier",
+                "description": "",
+                "operationId": "getGeozoneOrg",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the geozone",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Orgs"
+                        }
+                    },
+                    "404": {
+                        "description": "Geozone not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/geozones/{id}/policies": {
+            "get": {
+                "tags": ["geozones"],
+                "summary": "Retrieve the policies for a geozone by the geozone's identifier",
+                "description": "",
+                "operationId": "getGeozonePolicies",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the geozone",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Policies"
+                        }
+                    },
+                    "404": {
+                        "description": "Geozone not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs": {
+            "get": {
+                "tags": ["orgs"],
+                "summary": "Retrieve all organizations the authenticated user can access",
+                "description": "",
+                "operationId": "getOrgs",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Orgs"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["orgs"],
+                "summary": "Create new organizations",
+                "description": "",
+                "operationId": "createOrgs",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Orgs"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid organizations",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs/{id}": {
+            "get": {
+                "tags": ["orgs"],
+                "summary": "Retrieve an organization by its identifier",
+                "description": "",
+                "operationId": "getOrg",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the organization",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Orgs"
+                        }
+                    },
+                    "404": {
+                        "description": "Org not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs/{id}/children": {
+            "get": {
+                "tags": ["orgs"],
+                "summary": "Retrieve an organization's children by its identifier",
+                "description": "",
+                "operationId": "getOrgChildren",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the organization",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Orgs"
+                        }
+                    },
+                    "404": {
+                        "description": "Org not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/orgs/{id}/parent": {
+            "get": {
+                "tags": ["orgs"],
+                "summary": "Retrieve an organization's parent by its identifier",
+                "description": "",
+                "operationId": "getOrgParent",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the organization",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Orgs"
+                        }
+                    },
+                    "404": {
+                        "description": "Org not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/policies": {
+            "get": {
+                "tags": ["policies"],
+                "summary": "Retrieve all policies",
+                "description": "",
+                "operationId": "getPolicies",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "filter[geozone]",
+                        "in": "query",
+                        "description": "Identifiers of geozones which will have their policies represented in the response",
+                        "required": false,
+                        "type": "array",
+                        "collectionFormat": "multi",
+                        "items": {
+                            "type": "string"
+                        }
+                    }, {
+                        "name": "filter[permission]",
+                        "in": "query",
+                        "description": "Permission types which will be represented in the response",
+                        "required": false,
+                        "type": "array",
+                        "collectionFormat": "multi",
+                        "enum": ["cargo", "fuel"],
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Policies"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["policies"],
+                "summary": "Create a policy or policies for a geozone",
+                "description": "",
+                "operationId": "createPolicies",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Newly created policies",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Policies"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Policies"
+                        }
+                    },
+                    "422": {
+                        "description": "One or more policies is invalid and could not be created",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/policies/{id}": {
+            "get": {
+                "tags": ["policies"],
+                "summary": "Retrieve a policy by its identifier",
+                "description": "",
+                "operationId": "getPolicy",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the policy",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Policies"
+                        }
+                    },
+                    "404": {
+                        "description": "Policy not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["policies"],
+                "summary": "Delete a policy by its identifier",
+                "description": "",
+                "operationId": "deleteAuthorization",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the policy",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Policy not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/policies/{id}/asset": {
+            "get": {
+                "tags": ["policies"],
+                "summary": "Retrieve the assets attached to a policy by the policy's identifier",
+                "description": "",
+                "operationId": "getPolicyAsset",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the policy",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Assets"
+                        }
+                    },
+                    "404": {
+                        "description": "Policy not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/policies/{id}/authorizations": {
+            "get": {
+                "tags": ["policies"],
+                "summary": "Retrieve the authorizations attached to a policy by the policy's identifier",
+                "description": "",
+                "operationId": "getPolicyAuthorizations",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the policy",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Authorizations"
+                        }
+                    },
+                    "404": {
+                        "description": "Policy not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
+        },
+        "/policies/{id}/geozone": {
+            "get": {
+                "tags": ["policies"],
+                "summary": "Retrieve the geozone attached to a policy by the policy's identifier",
+                "description": "",
+                "operationId": "getPolicyGeozone",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the policy",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Geozones"
+                        }
+                    },
+                    "404": {
+                        "description": "Policy not found",
+                        "schema": {
+                            "$ref": "#/definitions/Errors"
+                        }
+                    }
+                }
+            }
         }
-      }
     },
-    "/policies/{id}" : {
-      "get" : {
-        "tags" : [ "policies" ],
-        "summary" : "Retrieve a policy by its identifier",
-        "description" : "",
-        "operationId" : "getPolicy",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the policy",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Policies"
+    "definitions": {
+        "Activation": {
+            "required": ["created", "generated", "name", "value"],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Sensor or sensor group which triggered the activation"
+                },
+                "value": {
+                    "description": "Abnormal value for the activation",
+                    "$ref": "#/definitions/Number"
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the Nuve platform received the activation"
+                },
+                "generated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the activation was observed"
+                }
+            },
+            "description": "Attributes for the activation"
+        },
+        "ActivationData": {
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier",
+                    "readOnly": true
+                },
+                "type": {
+                    "type": "string",
+                    "description": "object type",
+                    "readOnly": true
+                },
+                "attributes": {
+                    "$ref": "#/definitions/Activation"
+                },
+                "relationships": {
+                    "$ref": "#/definitions/ActivationRelationships"
+                }
+            },
+            "description": "When an event shows the metric for a sensor outside of its normal range an activation is created"
+        },
+        "ActivationRelationships": {
+            "required": ["analyses", "event"],
+            "properties": {
+                "event": {
+                    "description": "Returns the event which triggered this activation",
+                    "$ref": "#/definitions/OneRelationship"
+                },
+                "analyses": {
+                    "description": "Return the analyses which reference this activation",
+                    "$ref": "#/definitions/ManyRelationship"
+                }
+            },
+            "description": "Relationships for the activation"
+        },
+        "Activations": {
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ActivationData"
+                    }
+                }
+            },
+            "description": "A collection of activations"
+        },
+        "Analyses": {
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AnalysisData"
+                    }
+                }
+            },
+            "description": "A collection of analyses data"
+        },
+        "Analysis": {
+            "required": ["category", "start", "status"],
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "description": "Short string to used to collate analyses into a category",
+                    "enum": ["fuel_refill"]
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Whether or not the analysis has been completed yet",
+                    "enum": ["open", "closed"]
+                },
+                "end": {
+                    "description": "Date, time, location, speed and heading of the asset at the end point of the analysis, if the analysis has been closed",
+                    "$ref": "#/definitions/Checkpoint"
+                },
+                "summary": {
+                    "type": "array",
+                    "description": "Human-readable titles and descriptions for an analysis",
+                    "items": {
+                        "$ref": "#/definitions/Summary"
+                    }
+                },
+                "start": {
+                    "description": "Date, time, location, speed and heading of the asset at the starting point of the analysis",
+                    "$ref": "#/definitions/Checkpoint"
+                },
+                "modified": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the resource was last modified",
+                    "readOnly": true
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the resource was originally created",
+                    "readOnly": true
+                }
+            },
+            "description": "Attributes for the analysis"
+        },
+        "AnalysisData": {
+            "required": ["attributes", "relationships"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier",
+                    "readOnly": true
+                },
+                "type": {
+                    "type": "string",
+                    "description": "object type",
+                    "readOnly": true
+                },
+                "attributes": {
+                    "description": "Attributes for the analysis",
+                    "$ref": "#/definitions/Analysis"
+                },
+                "relationships": {
+                    "description": "Relationships for the analysis",
+                    "$ref": "#/definitions/AnalysisRelationships"
+                }
+            },
+            "description": "An analysis of a collection of event data related to a particular asset"
+        },
+        "AnalysisRelationships": {
+            "required": ["activations", "asset"],
+            "properties": {
+                "activations": {
+                    "description": "The activations which contribute to this analysis",
+                    "$ref": "#/definitions/ManyRelationship"
+                },
+                "asset": {
+                    "description": "The asset that triggered the analysis",
+                    "$ref": "#/definitions/OneRelationship"
+                }
+            },
+            "description": "Relationships for the analysis"
+        },
+        "Asset": {
+            "required": ["classification", "name"],
+            "properties": {
+                "classification": {
+                    "type": "string",
+                    "description": "Classification of the asset, what type of asset it is",
+                    "enum": ["tractor", "trailer", "truck"]
+                },
+                "name": {
+                    "type": "string",
+                    "description": "A short, user-friendly name which will be used to display the resource to the end user"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A user-friendly description of the resource"
+                },
+                "slug": {
+                    "type": "string",
+                    "description": "A short sting which can be used in URLs, in place of the ID to represent the resource"
+                },
+                "modified": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the resource was last modified",
+                    "readOnly": true
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the resource was originally created",
+                    "readOnly": true
+                },
+                "tags": {
+                    "type": "array",
+                    "description": "List of tags associated with this resource",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "permissions": {
+                    "type": "array",
+                    "description": "Permissions which are effective for this resource",
+                    "readOnly": true,
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Attributes for an asset"
+        },
+        "AssetContainer": {
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/AssetData"
+                }
+            },
+            "description": "A single asset data container"
+        },
+        "AssetData": {
+            "required": ["attributes"],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "object type",
+                    "readOnly": true
+                },
+                "attributes": {
+                    "description": "Attributes for the asset",
+                    "$ref": "#/definitions/Asset"
+                },
+                "relationships": {
+                    "description": "Relationships for the asset",
+                    "readOnly": true,
+                    "$ref": "#/definitions/AssetRelationships"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier",
+                    "readOnly": true
+                }
+            },
+            "description": "ID, type and relationships for an asset"
+        },
+        "AssetRelationships": {
+            "properties": {
+                "org": {
+                    "description": "The organization which contains the geozone",
+                    "readOnly": true,
+                    "$ref": "#/definitions/OneRelationship"
+                },
+                "authorizations": {
+                    "description": "Authorizations which have been configured on this asset",
+                    "readOnly": true,
+                    "$ref": "#/definitions/ManyRelationship"
+                }
+            },
+            "description": "Relationships for an asset"
+        },
+        "Assets": {
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AssetData"
+                    }
+                }
+            },
+            "description": "A collection of asset data"
+        },
+        "Authorization": {
+            "required": ["permission"],
+            "properties": {
+                "permission": {
+                    "type": "string",
+                    "description": "Permission, for example fuel or cargo, related to the access which this authorization provides",
+                    "enum": ["fuel", "cargo"]
+                },
+                "access": {
+                    "type": "string",
+                    "description": "Whether or not the permission should be granted or revoked based upon the hierarchy",
+                    "enum": ["granted", "revoked"]
+                },
+                "expiration": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The date and time at which this authorization will expire and no longer be valid"
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the authorization was originally created",
+                    "readOnly": true
+                }
+            },
+            "description": "Attributes for an authorization"
+        },
+        "AuthorizationData": {
+            "required": ["attributes", "relationships"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier",
+                    "readOnly": true
+                },
+                "type": {
+                    "type": "string",
+                    "description": "object type",
+                    "readOnly": true
+                },
+                "attributes": {
+                    "description": "Attributes for the authorization",
+                    "$ref": "#/definitions/Authorization"
+                },
+                "relationships": {
+                    "description": "Attributes for the authorization",
+                    "$ref": "#/definitions/AuthorizationRelationships"
+                }
+            },
+            "description": "ID, type and relationships for an authorization. Authorizations are the bridge between policieson geozones and assets. When an asset enters a geozone, any policies configured on that geozone come intoeffect in order to grant permissions. Alternatively, authorizations can be granted directly on assets, whichare not associated with either geozones or policies and which will override other authorizations"
+        },
+        "AuthorizationRelationships": {
+            "properties": {
+                "policy": {
+                    "description": "Policy which this authorization is attached to. When the policy goes into effect, for instance if an asset enters a geozone, this authorization will be used to grant or revoke access",
+                    "readOnly": true,
+                    "$ref": "#/definitions/OneRelationship"
+                },
+                "asset": {
+                    "description": "Asset which this authorization is attached to. When determining when the current authorizationfor an asset is, this authorization will be taken into consideration",
+                    "$ref": "#/definitions/OneRelationship"
+                }
+            },
+            "description": "Relationships for an authorization"
+        },
+        "Authorizations": {
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AuthorizationData"
+                    }
+                }
             }
-          },
-          "404" : {
-            "description" : "Policy not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
+        },
+        "Cellular": {
+            "properties": {
+                "signal": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "The cellular signal strength in Decibel-milliwatts"
+                },
+                "carrier": {
+                    "type": "string",
+                    "description": "Carrier of the cellular data"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Status of the cellular connection, roaming or not roaming"
+                }
             }
-          }
+        },
+        "Checkpoint": {
+            "required": ["coordinates", "date"],
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time of the analysis checkpoint"
+                },
+                "heading": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Heading of the asset, represented as degrees from true north"
+                },
+                "speed": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Speed of the asset, represented as kilometers per hour (KPH)"
+                },
+                "coordinates": {
+                    "type": "array",
+                    "description": "Coordinates of the location for the asset, provided as a point in GeoJSON format",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            }
+        },
+        "Error": {
+            "properties": {
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "Errors": {
+            "properties": {
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Error"
+                    }
+                }
+            }
+        },
+        "Geozone": {
+            "required": ["coordinates", "name"],
+            "properties": {
+                "coordinates": {
+                    "type": "array",
+                    "description": "Coordinates for this geozone provided as a polygon in GeoJSON format",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "modified": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the resource was last modified",
+                    "readOnly": true
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the resource was originally created",
+                    "readOnly": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "A short, user-friendly name which will be used to display the resource to the end user"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A user-friendly description of the resource"
+                },
+                "slug": {
+                    "type": "string",
+                    "description": "A short sting which can be used in URLs, in place of the ID to represent the resource"
+                },
+                "tags": {
+                    "type": "array",
+                    "description": "List of tags associated with this resource",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "permissions": {
+                    "type": "array",
+                    "description": "Permissions which are effective for this resource",
+                    "readOnly": true,
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Attributes for a geozone"
+        },
+        "GeozoneData": {
+            "required": ["attributes"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier",
+                    "readOnly": true
+                },
+                "type": {
+                    "type": "string",
+                    "description": "object type",
+                    "readOnly": true
+                },
+                "attributes": {
+                    "description": "Attributes for the geozone",
+                    "$ref": "#/definitions/Geozone"
+                },
+                "relationships": {
+                    "description": "Relationships for the geozone",
+                    "readOnly": true,
+                    "$ref": "#/definitions/GeozoneRelationships"
+                }
+            },
+            "description": "Area in which different authorizations can be provided for assets"
+        },
+        "GeozoneRelationships": {
+            "properties": {
+                "org": {
+                    "description": "The organization which contains the geozone",
+                    "$ref": "#/definitions/OneRelationship"
+                },
+                "policies": {
+                    "description": "Policies which have been configured on this geozone",
+                    "readOnly": true,
+                    "$ref": "#/definitions/ManyRelationship"
+                }
+            },
+            "description": "Relationships for a geozone"
+        },
+        "Geozones": {
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GeozoneData"
+                    }
+                }
+            }
+        },
+        "Gps": {
+            "required": ["fixTime"],
+            "properties": {
+                "fixTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The date and time at which the GPS fix was acquired"
+                },
+                "hdop": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "The GPS horizontal dilution of precision"
+                },
+                "satellites": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The number of satellites used to acquire a GPS fix."
+                }
+            }
+        },
+        "Location": {
+            "required": ["coordinates"],
+            "properties": {
+                "heading": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Heading of the asset, represented as degrees from true north"
+                },
+                "speed": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Speed of the asset, represented as kilometers per hour (KPH)"
+                },
+                "coordinates": {
+                    "type": "array",
+                    "description": "Coordinates of the location for the asset, provided as a point in GeoJSON format",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            }
+        },
+        "LocationEvent": {
+            "required": ["generated", "location"],
+            "properties": {
+                "location": {
+                    "description": "Location, speed and heading of the asset at the time of this event",
+                    "$ref": "#/definitions/Location"
+                },
+                "gps": {
+                    "description": "When originating from a GPS device, contains information about the GPS lock",
+                    "$ref": "#/definitions/Gps"
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the Nuve API received the event",
+                    "readOnly": true
+                },
+                "generated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time at which this event was observed or generated"
+                },
+                "cellular": {
+                    "description": "When originating from a device with a cellular modem, contains information about the cellular connection",
+                    "$ref": "#/definitions/Cellular"
+                },
+                "metrics": {
+                    "type": "object",
+                    "description": "Key/value metrics for an event",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            }
+        },
+        "LocationEventData": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "object type",
+                    "readOnly": true
+                },
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier",
+                    "readOnly": true
+                },
+                "attributes": {
+                    "$ref": "#/definitions/LocationEvent"
+                },
+                "relationships": {
+                    "$ref": "#/definitions/LocationEventRelationships"
+                }
+            }
+        },
+        "LocationEventRelationships": {
+            "required": ["asset"],
+            "properties": {
+                "operator": {
+                    "description": "The operator, in the case of a truck, the driver, for this asset",
+                    "$ref": "#/definitions/OneRelationship"
+                },
+                "asset": {
+                    "description": "The asset which generated this event",
+                    "$ref": "#/definitions/OneRelationship"
+                }
+            }
+        },
+        "LocationEvents": {
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LocationEventData"
+                    }
+                }
+            },
+            "description": "A collection of location event data"
+        },
+        "ManyRelationship": {
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "$ref": "#/definitions/ResourceData"
+                    }
+                },
+                "links": {
+                    "description": "Links for this relationship",
+                    "$ref": "#/definitions/RelationshipLinks"
+                }
+            },
+            "description": "Represents a relationship between one entity to one to many other entities."
+        },
+        "Number": {
+            "type": "object"
+        },
+        "OneRelationship": {
+            "properties": {
+                "data": {
+                    "description": "Resource for the relationship",
+                    "$ref": "#/definitions/ResourceData"
+                },
+                "links": {
+                    "description": "Links for this relationship",
+                    "$ref": "#/definitions/RelationshipLinks"
+                }
+            },
+            "description": "Represents a relationship between two different entities."
+        },
+        "Org": {
+            "required": ["name"],
+            "properties": {
+                "geozones": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Number of geozones belonging to this organization",
+                    "readOnly": true
+                },
+                "assets": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Number of assets belonging to this organization",
+                    "readOnly": true
+                },
+                "modified": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the resource was last modified",
+                    "readOnly": true
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the resource was originally created",
+                    "readOnly": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "A short, user-friendly name which will be used to display the resource to the end user"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A user-friendly description of the resource"
+                },
+                "slug": {
+                    "type": "string",
+                    "description": "A short sting which can be used in URLs, in place of the ID to represent the resource"
+                }
+            },
+            "description": "Attributes for an organization"
+        },
+        "OrgData": {
+            "required": ["attributes"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier",
+                    "readOnly": true
+                },
+                "type": {
+                    "type": "string",
+                    "description": "object type",
+                    "readOnly": true
+                },
+                "attributes": {
+                    "description": "Attributes for the org",
+                    "$ref": "#/definitions/Org"
+                },
+                "links": {
+                    "description": "Link to retrieve the organization",
+                    "readOnly": true,
+                    "$ref": "#/definitions/SelfLink"
+                },
+                "relationships": {
+                    "description": "Link to retrieve the organization",
+                    "readOnly": true,
+                    "$ref": "#/definitions/OrgRelationships"
+                }
+            },
+            "description": "An organization which contains assets, geozones, and users"
+        },
+        "OrgRelationships": {
+            "properties": {
+                "parent": {
+                    "description": "When available, the parent of the organization",
+                    "$ref": "#/definitions/OneRelationship"
+                },
+                "children": {
+                    "description": "Children of the organization. Child organizations can be managed by the parent organization",
+                    "readOnly": true,
+                    "$ref": "#/definitions/ManyRelationship"
+                }
+            },
+            "description": "Relationships for an organization"
+        },
+        "Orgs": {
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OrgData"
+                    }
+                }
+            }
+        },
+        "Policies": {
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PolicyData"
+                    }
+                }
+            },
+            "description": "A collection of policies"
+        },
+        "Policy": {
+            "required": ["permission"],
+            "properties": {
+                "permission": {
+                    "type": "string",
+                    "description": "Permission, for example fuel or cargo, related to the access which this authorization provides",
+                    "enum": ["fuel", "cargo"]
+                },
+                "expiration": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Expiration date and time of this policy. At which time all existing authorizations relatedto this policy will be canceled"
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "one_time move denotes that this policy will go into effect exactly one time for the asset which it is attached to after which the policy is considered fulfilled and will no longercreate authorizations",
+                    "enum": ["one_time", "unlimited"]
+                },
+                "duration": {
+                    "type": "string",
+                    "description": "Duration of time that the authorizations created by this policy are effective"
+                }
+            },
+            "description": "Attributes for a policy"
+        },
+        "PolicyData": {
+            "required": ["attributes"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier",
+                    "readOnly": true
+                },
+                "type": {
+                    "type": "string",
+                    "description": "object type",
+                    "readOnly": true
+                },
+                "attributes": {
+                    "description": "Attributes for the policy",
+                    "$ref": "#/definitions/Policy"
+                },
+                "relationships": {
+                    "description": "Relationships for the policy",
+                    "$ref": "#/definitions/PolicyRelationships"
+                }
+            },
+            "description": "ID, type and relationships for a policy"
+        },
+        "PolicyRelationships": {
+            "required": ["asset"],
+            "properties": {
+                "geozone": {
+                    "description": "The geozone to which the policy is attached",
+                    "$ref": "#/definitions/OneRelationship"
+                },
+                "authorizations": {
+                    "description": "Authorizations which have been put into effect by this policy. When an asset enters a geozonea corresponding authorization is created. When it leaves the geozone, it is removed",
+                    "readOnly": true,
+                    "$ref": "#/definitions/ManyRelationship"
+                },
+                "asset": {
+                    "description": "When set, defines the asset which this policy affects",
+                    "$ref": "#/definitions/OneRelationship"
+                }
+            },
+            "description": "Relationships for a policy"
+        },
+        "RelationshipLinks": {
+            "properties": {
+                "related": {
+                    "type": "string",
+                    "description": "Related link for the relationship"
+                },
+                "self": {
+                    "type": "string",
+                    "description": "Self link for the relationship"
+                }
+            },
+            "description": "Links for a relationship."
+        },
+        "ResourceData": {
+            "required": ["id", "type"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier",
+                    "readOnly": true
+                },
+                "type": {
+                    "type": "string",
+                    "description": "object type",
+                    "readOnly": true
+                }
+            }
+        },
+        "SelfLink": {
+            "properties": {
+                "self": {
+                    "type": "string"
+                }
+            }
+        },
+        "Summary": {
+            "required": ["description", "language", "title"],
+            "properties": {
+                "language": {
+                    "type": "string",
+                    "description": "Language code for the language of the title and description"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "A short title for the analysis"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A longer description, generally meant to provide the who, what and where for the analysis"
+                }
+            },
+            "description": "A human-readable title and description for an analysis"
         }
-      },
-      "delete" : {
-        "tags" : [ "policies" ],
-        "summary" : "Delete a policy by its identifier",
-        "description" : "",
-        "operationId" : "deleteAuthorization",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the policy",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "404" : {
-            "description" : "Policy not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/policies/{id}/asset" : {
-      "get" : {
-        "tags" : [ "policies" ],
-        "summary" : "Retrieve the assets attached to a policy by the policy's identifier",
-        "description" : "",
-        "operationId" : "getPolicyAsset",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the policy",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Assets"
-            }
-          },
-          "404" : {
-            "description" : "Policy not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/policies/{id}/authorizations" : {
-      "get" : {
-        "tags" : [ "policies" ],
-        "summary" : "Retrieve the authorizations attached to a policy by the policy's identifier",
-        "description" : "",
-        "operationId" : "getPolicyAuthorizations",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the policy",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Authorizations"
-            }
-          },
-          "404" : {
-            "description" : "Policy not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
-    },
-    "/policies/{id}/geozone" : {
-      "get" : {
-        "tags" : [ "policies" ],
-        "summary" : "Retrieve the geozone attached to a policy by the policy's identifier",
-        "description" : "",
-        "operationId" : "getPolicyGeozone",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Identifier for the policy",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Geozones"
-            }
-          },
-          "404" : {
-            "description" : "Policy not found",
-            "schema" : {
-              "$ref" : "#/definitions/Errors"
-            }
-          }
-        }
-      }
     }
-  },
-  "definitions" : {
-    "Activation" : {
-      "required" : [ "created", "generated", "name", "value" ],
-      "properties" : {
-        "name" : {
-          "type" : "string",
-          "description" : "Sensor or sensor group which triggered the activation"
-        },
-        "value" : {
-          "description" : "Abnormal value for the activation",
-          "$ref" : "#/definitions/Number"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the Nuve platform received the activation"
-        },
-        "generated" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the activation was observed"
-        }
-      },
-      "description" : "Attributes for the activation"
-    },
-    "ActivationData" : {
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
-        "type" : {
-          "type" : "string",
-          "description" : "object type",
-          "readOnly" : true
-        },
-        "attributes" : {
-          "$ref" : "#/definitions/Activation"
-        },
-        "relationships" : {
-          "$ref" : "#/definitions/ActivationRelationships"
-        }
-      },
-      "description" : "When an event shows the metric for a sensor outside of its normal range an activation is created"
-    },
-    "ActivationRelationships" : {
-      "required" : [ "analyses", "event" ],
-      "properties" : {
-        "event" : {
-          "description" : "Returns the event which triggered this activation",
-          "$ref" : "#/definitions/OneRelationship"
-        },
-        "analyses" : {
-          "description" : "Return the analyses which reference this activation",
-          "$ref" : "#/definitions/ManyRelationship"
-        }
-      },
-      "description" : "Relationships for the activation"
-    },
-    "Activations" : {
-      "properties" : {
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/ActivationData"
-          }
-        }
-      },
-      "description" : "A collection of activations"
-    },
-    "Analyses" : {
-      "properties" : {
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/AnalysisData"
-          }
-        }
-      },
-      "description" : "A collection of analyses data"
-    },
-    "Analysis" : {
-      "required" : [ "category", "start", "status" ],
-      "properties" : {
-        "category" : {
-          "type" : "string",
-          "description" : "Short string to used to collate analyses into a category",
-          "enum" : [ "fuel_refill" ]
-        },
-        "status" : {
-          "type" : "string",
-          "description" : "Whether or not the analysis has been completed yet",
-          "enum" : [ "OPEN", "CLOSED", "open", "closed" ]
-        },
-        "end" : {
-          "description" : "Date, time, location, speed and heading of the asset at the end point of the analysis, if the analysis has been closed",
-          "$ref" : "#/definitions/Optional"
-        },
-        "summary" : {
-          "type" : "array",
-          "description" : "Human-readable titles and descriptions for an analysis",
-          "items" : {
-            "$ref" : "#/definitions/Summary"
-          }
-        },
-        "start" : {
-          "description" : "Date, time, location, speed and heading of the asset at the starting point of the analysis",
-          "$ref" : "#/definitions/Checkpoint"
-        },
-        "modified" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was originally created",
-          "readOnly" : true
-        }
-      },
-      "description" : "Attributes for the analysis"
-    },
-    "AnalysisData" : {
-      "required" : [ "attributes", "relationships" ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
-        "type" : {
-          "type" : "string",
-          "description" : "object type",
-          "readOnly" : true
-        },
-        "attributes" : {
-          "description" : "Attributes for the analysis",
-          "$ref" : "#/definitions/Analysis"
-        },
-        "relationships" : {
-          "description" : "Relationships for the analysis",
-          "$ref" : "#/definitions/AnalysisRelationships"
-        }
-      },
-      "description" : "An analysis of a collection of event data related to a particular asset"
-    },
-    "AnalysisRelationships" : {
-      "required" : [ "activations", "asset" ],
-      "properties" : {
-        "activations" : {
-          "description" : "The activations which contribute to this analysis",
-          "$ref" : "#/definitions/ManyRelationship"
-        },
-        "asset" : {
-          "description" : "The asset that triggered the analysis",
-          "$ref" : "#/definitions/OneRelationship"
-        }
-      },
-      "description" : "Relationships for the analysis"
-    },
-    "Asset" : {
-      "required" : [ "classification", "name" ],
-      "properties" : {
-        "classification" : {
-          "type" : "string",
-          "description" : "Classification of the asset, what type of asset it is",
-          "enum" : [ "tractor", "trailer", "truck" ]
-        },
-        "name" : {
-          "type" : "string",
-          "description" : "A short, user-friendly name which will be used to display the resource to the end user"
-        },
-        "description" : {
-          "type" : "string",
-          "description" : "A user-friendly description of the resource"
-        },
-        "slug" : {
-          "type" : "string",
-          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource"
-        },
-        "modified" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was originally created",
-          "readOnly" : true
-        },
-        "tags" : {
-          "type" : "array",
-          "description" : "List of tags associated with this resource",
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "permissions" : {
-          "type" : "array",
-          "description" : "Permissions which are effective for this resource",
-          "readOnly" : true,
-          "items" : {
-            "type" : "string"
-          }
-        }
-      },
-      "description" : "Attributes for an asset"
-    },
-    "AssetContainer" : {
-      "properties" : {
-        "data" : {
-          "$ref" : "#/definitions/AssetData"
-        }
-      },
-      "description" : "A single asset data container"
-    },
-    "AssetData" : {
-      "required" : [ "attributes" ],
-      "properties" : {
-        "type" : {
-          "type" : "string",
-          "description" : "object type",
-          "readOnly" : true
-        },
-        "attributes" : {
-          "description" : "Attributes for the asset",
-          "$ref" : "#/definitions/Asset"
-        },
-        "relationships" : {
-          "description" : "Relationships for the asset",
-          "readOnly" : true,
-          "$ref" : "#/definitions/AssetRelationships"
-        },
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        }
-      },
-      "description" : "ID, type and relationships for an asset"
-    },
-    "AssetRelationships" : {
-      "properties" : {
-        "org" : {
-          "description" : "The organization which contains the geozone",
-          "readOnly" : true,
-          "$ref" : "#/definitions/OneRelationship"
-        },
-        "authorizations" : {
-          "description" : "Authorizations which have been configured on this asset",
-          "readOnly" : true,
-          "$ref" : "#/definitions/ManyRelationship"
-        }
-      },
-      "description" : "Relationships for an asset"
-    },
-    "Assets" : {
-      "properties" : {
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/AssetData"
-          }
-        }
-      },
-      "description" : "A collection of asset data"
-    },
-    "Authorization" : {
-      "required" : [ "permission" ],
-      "properties" : {
-        "permission" : {
-          "type" : "string",
-          "description" : "Permission, for example fuel or cargo, related to the access which this authorization provides",
-          "enum" : [ "fuel", "cargo" ]
-        },
-        "access" : {
-          "type" : "string",
-          "description" : "Whether or not the permission should be granted or revoked based upon the hierarchy",
-          "enum" : [ "granted", "revoked" ]
-        },
-        "expiration" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "The date and time at which this authorization will expire and no longer be valid"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the authorization was originally created",
-          "readOnly" : true
-        }
-      },
-      "description" : "Attributes for an authorization"
-    },
-    "AuthorizationData" : {
-      "required" : [ "attributes", "relationships" ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
-        "type" : {
-          "type" : "string",
-          "description" : "object type",
-          "readOnly" : true
-        },
-        "attributes" : {
-          "description" : "Attributes for the authorization",
-          "$ref" : "#/definitions/Authorization"
-        },
-        "relationships" : {
-          "description" : "Attributes for the authorization",
-          "$ref" : "#/definitions/AuthorizationRelationships"
-        }
-      },
-      "description" : "ID, type and relationships for an authorization. Authorizations are the bridge between policieson geozones and assets. When an asset enters a geozone, any policies configured on that geozone come intoeffect in order to grant permissions. Alternatively, authorizations can be granted directly on assets, whichare not associated with either geozones or policies and which will override other authorizations"
-    },
-    "AuthorizationRelationships" : {
-      "properties" : {
-        "policy" : {
-          "description" : "Policy which this authorization is attached to. When the policy goes into effect, for instance if an asset enters a geozone, this authorization will be used to grant or revoke access",
-          "readOnly" : true,
-          "$ref" : "#/definitions/OneRelationship"
-        },
-        "asset" : {
-          "description" : "Asset which this authorization is attached to. When determining when the current authorizationfor an asset is, this authorization will be taken into consideration",
-          "$ref" : "#/definitions/OneRelationship"
-        }
-      },
-      "description" : "Relationships for an authorization"
-    },
-    "Authorizations" : {
-      "properties" : {
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/AuthorizationData"
-          }
-        }
-      }
-    },
-    "Cellular" : {
-      "properties" : {
-        "signal" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "The cellular signal strength in Decibel-milliwatts"
-        },
-        "carrier" : {
-          "type" : "string",
-          "description" : "Carrier of the cellular data"
-        },
-        "status" : {
-          "type" : "string",
-          "description" : "Status of the cellular connection, roaming or not roaming"
-        }
-      }
-    },
-    "Checkpoint" : {
-      "required" : [ "coordinates", "date" ],
-      "properties" : {
-        "date" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time of the analysis checkpoint"
-        },
-        "heading" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Heading of the asset, represented as degrees from true north"
-        },
-        "speed" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
-        },
-        "coordinates" : {
-          "type" : "array",
-          "description" : "Coordinates of the location for the asset, provided as a point in GeoJSON format",
-          "items" : {
-            "type" : "number",
-            "format" : "double"
-          }
-        }
-      }
-    },
-    "Error" : {
-      "properties" : {
-        "title" : {
-          "type" : "string"
-        }
-      }
-    },
-    "Errors" : {
-      "properties" : {
-        "errors" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/Error"
-          }
-        }
-      }
-    },
-    "Geozone" : {
-      "required" : [ "coordinates", "name" ],
-      "properties" : {
-        "coordinates" : {
-          "type" : "array",
-          "description" : "Coordinates for this geozone provided as a polygon in GeoJSON format",
-          "items" : {
-            "type" : "number",
-            "format" : "double"
-          }
-        },
-        "modified" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was originally created",
-          "readOnly" : true
-        },
-        "name" : {
-          "type" : "string",
-          "description" : "A short, user-friendly name which will be used to display the resource to the end user"
-        },
-        "description" : {
-          "type" : "string",
-          "description" : "A user-friendly description of the resource"
-        },
-        "slug" : {
-          "type" : "string",
-          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource"
-        },
-        "tags" : {
-          "type" : "array",
-          "description" : "List of tags associated with this resource",
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "permissions" : {
-          "type" : "array",
-          "description" : "Permissions which are effective for this resource",
-          "readOnly" : true,
-          "items" : {
-            "type" : "string"
-          }
-        }
-      },
-      "description" : "Attributes for a geozone"
-    },
-    "GeozoneData" : {
-      "required" : [ "attributes" ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
-        "type" : {
-          "type" : "string",
-          "description" : "object type",
-          "readOnly" : true
-        },
-        "attributes" : {
-          "description" : "Attributes for the geozone",
-          "$ref" : "#/definitions/Geozone"
-        },
-        "relationships" : {
-          "description" : "Relationships for the geozone",
-          "readOnly" : true,
-          "$ref" : "#/definitions/GeozoneRelationships"
-        }
-      },
-      "description" : "Area in which different authorizations can be provided for assets"
-    },
-    "GeozoneRelationships" : {
-      "properties" : {
-        "org" : {
-          "description" : "The organization which contains the geozone",
-          "$ref" : "#/definitions/OneRelationship"
-        },
-        "policies" : {
-          "description" : "Policies which have been configured on this geozone",
-          "readOnly" : true,
-          "$ref" : "#/definitions/ManyRelationship"
-        }
-      },
-      "description" : "Relationships for a geozone"
-    },
-    "Geozones" : {
-      "properties" : {
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/GeozoneData"
-          }
-        }
-      }
-    },
-    "Gps" : {
-      "required" : [ "fixTime" ],
-      "properties" : {
-        "fixTime" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "The date and time at which the GPS fix was acquired"
-        },
-        "hdop" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "The GPS horizontal dilution of precision"
-        },
-        "satellites" : {
-          "type" : "integer",
-          "format" : "int32",
-          "description" : "The number of satellites used to acquire a GPS fix."
-        }
-      }
-    },
-    "Location" : {
-      "required" : [ "coordinates" ],
-      "properties" : {
-        "heading" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Heading of the asset, represented as degrees from true north"
-        },
-        "speed" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
-        },
-        "coordinates" : {
-          "type" : "array",
-          "description" : "Coordinates of the location for the asset, provided as a point in GeoJSON format",
-          "items" : {
-            "type" : "number",
-            "format" : "double"
-          }
-        }
-      }
-    },
-    "LocationEvent" : {
-      "required" : [ "generated", "location" ],
-      "properties" : {
-        "location" : {
-          "description" : "Location, speed and heading of the asset at the time of this event",
-          "$ref" : "#/definitions/Location"
-        },
-        "gps" : {
-          "description" : "When originating from a GPS device, contains information about the GPS lock",
-          "$ref" : "#/definitions/Gps"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the Nuve API received the event",
-          "readOnly" : true
-        },
-        "generated" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time at which this event was observed or generated"
-        },
-        "cellular" : {
-          "description" : "When originating from a device with a cellular modem, contains information about the cellular connection",
-          "$ref" : "#/definitions/Cellular"
-        },
-        "metrics" : {
-          "type" : "object",
-          "description" : "Key/value metrics for an event",
-          "additionalProperties" : {
-            "type" : "number",
-            "format" : "double"
-          }
-        }
-      }
-    },
-    "LocationEventData" : {
-      "properties" : {
-        "type" : {
-          "type" : "string",
-          "description" : "object type",
-          "readOnly" : true
-        },
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
-        "attributes" : {
-          "$ref" : "#/definitions/LocationEvent"
-        },
-        "relationships" : {
-          "$ref" : "#/definitions/LocationEventRelationships"
-        }
-      }
-    },
-    "LocationEventRelationships" : {
-      "required" : [ "asset" ],
-      "properties" : {
-        "operator" : {
-          "description" : "The operator, in the case of a truck, the driver, for this asset",
-          "$ref" : "#/definitions/OneRelationship"
-        },
-        "asset" : {
-          "description" : "The asset which generated this event",
-          "$ref" : "#/definitions/OneRelationship"
-        }
-      }
-    },
-    "LocationEvents" : {
-      "properties" : {
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/LocationEventData"
-          }
-        }
-      },
-      "description" : "A collection of location event data"
-    },
-    "ManyRelationship" : {
-      "properties" : {
-        "data" : {
-          "type" : "array",
-          "uniqueItems" : true,
-          "items" : {
-            "$ref" : "#/definitions/ResourceData"
-          }
-        },
-        "links" : {
-          "description" : "Links for this relationship",
-          "$ref" : "#/definitions/RelationshipLinks"
-        }
-      },
-      "description" : "Represents a relationship between one entity to one to many other entities."
-    },
-    "Number" : {
-      "type" : "object"
-    },
-    "OneRelationship" : {
-      "properties" : {
-        "data" : {
-          "description" : "Resource for the relationship",
-          "$ref" : "#/definitions/ResourceData"
-        },
-        "links" : {
-          "description" : "Links for this relationship",
-          "$ref" : "#/definitions/RelationshipLinks"
-        }
-      },
-      "description" : "Represents a relationship between two different entities."
-    },
-    "Optional" : {
-      "properties" : {
-        "present" : {
-          "type" : "boolean",
-          "default" : false
-        }
-      }
-    },
-    "Org" : {
-      "required" : [ "name" ],
-      "properties" : {
-        "geozones" : {
-          "type" : "integer",
-          "format" : "int32",
-          "description" : "Number of geozones belonging to this organization",
-          "readOnly" : true
-        },
-        "assets" : {
-          "type" : "integer",
-          "format" : "int32",
-          "description" : "Number of assets belonging to this organization",
-          "readOnly" : true
-        },
-        "modified" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was originally created",
-          "readOnly" : true
-        },
-        "name" : {
-          "type" : "string",
-          "description" : "A short, user-friendly name which will be used to display the resource to the end user"
-        },
-        "description" : {
-          "type" : "string",
-          "description" : "A user-friendly description of the resource"
-        },
-        "slug" : {
-          "type" : "string",
-          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource"
-        }
-      },
-      "description" : "Attributes for an organization"
-    },
-    "OrgData" : {
-      "required" : [ "attributes" ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
-        "type" : {
-          "type" : "string",
-          "description" : "object type",
-          "readOnly" : true
-        },
-        "attributes" : {
-          "description" : "Attributes for the org",
-          "$ref" : "#/definitions/Org"
-        },
-        "links" : {
-          "description" : "Link to retrieve the organization",
-          "readOnly" : true,
-          "$ref" : "#/definitions/SelfLink"
-        },
-        "relationships" : {
-          "description" : "Link to retrieve the organization",
-          "readOnly" : true,
-          "$ref" : "#/definitions/OrgRelationships"
-        }
-      },
-      "description" : "An organization which contains assets, geozones, and users"
-    },
-    "OrgRelationships" : {
-      "properties" : {
-        "parent" : {
-          "description" : "When available, the parent of the organization",
-          "$ref" : "#/definitions/OneRelationship"
-        },
-        "children" : {
-          "description" : "Children of the organization. Child organizations can be managed by the parent organization",
-          "readOnly" : true,
-          "$ref" : "#/definitions/ManyRelationship"
-        }
-      },
-      "description" : "Relationships for an organization"
-    },
-    "Orgs" : {
-      "properties" : {
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/OrgData"
-          }
-        }
-      }
-    },
-    "Policies" : {
-      "properties" : {
-        "data" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/PolicyData"
-          }
-        }
-      },
-      "description" : "A collection of policies"
-    },
-    "Policy" : {
-      "required" : [ "permission" ],
-      "properties" : {
-        "permission" : {
-          "type" : "string",
-          "description" : "Permission, for example fuel or cargo, related to the access which this authorization provides",
-          "enum" : [ "fuel", "cargo" ]
-        },
-        "expiration" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Expiration date and time of this policy. At which time all existing authorizations relatedto this policy will be canceled"
-        },
-        "mode" : {
-          "type" : "string",
-          "description" : "one_time move denotes that this policy will go into effect exactly one time for the asset which it is attached to after which the policy is considered fulfilled and will no longercreate authorizations",
-          "enum" : [ "one_time", "unlimited" ]
-        },
-        "duration" : {
-          "type" : "string",
-          "description" : "Duration of time that the authorizations created by this policy are effective"
-        }
-      },
-      "description" : "Attributes for a policy"
-    },
-    "PolicyData" : {
-      "required" : [ "attributes" ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
-        "type" : {
-          "type" : "string",
-          "description" : "object type",
-          "readOnly" : true
-        },
-        "attributes" : {
-          "description" : "Attributes for the policy",
-          "$ref" : "#/definitions/Policy"
-        },
-        "relationships" : {
-          "description" : "Relationships for the policy",
-          "$ref" : "#/definitions/PolicyRelationships"
-        }
-      },
-      "description" : "ID, type and relationships for a policy"
-    },
-    "PolicyRelationships" : {
-      "required" : [ "asset" ],
-      "properties" : {
-        "geozone" : {
-          "description" : "The geozone to which the policy is attached",
-          "$ref" : "#/definitions/OneRelationship"
-        },
-        "authorizations" : {
-          "description" : "Authorizations which have been put into effect by this policy. When an asset enters a geozonea corresponding authorization is created. When it leaves the geozone, it is removed",
-          "readOnly" : true,
-          "$ref" : "#/definitions/ManyRelationship"
-        },
-        "asset" : {
-          "description" : "When set, defines the asset which this policy affects",
-          "$ref" : "#/definitions/OneRelationship"
-        }
-      },
-      "description" : "Relationships for a policy"
-    },
-    "RelationshipLinks" : {
-      "properties" : {
-        "related" : {
-          "type" : "string",
-          "description" : "Related link for the relationship"
-        },
-        "self" : {
-          "type" : "string",
-          "description" : "Self link for the relationship"
-        }
-      },
-      "description" : "Links for a relationship."
-    },
-    "ResourceData" : {
-      "required" : [ "id", "type" ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
-        "type" : {
-          "type" : "string",
-          "description" : "object type",
-          "readOnly" : true
-        }
-      }
-    },
-    "SelfLink" : {
-      "properties" : {
-        "self" : {
-          "type" : "string"
-        }
-      }
-    },
-    "Summary" : {
-      "required" : [ "description", "language", "title" ],
-      "properties" : {
-        "language" : {
-          "type" : "string",
-          "description" : "Language code for the language of the title and description"
-        },
-        "title" : {
-          "type" : "string",
-          "description" : "A short title for the analysis"
-        },
-        "description" : {
-          "type" : "string",
-          "description" : "A longer description, generally meant to provide the who, what and where for the analysis"
-        }
-      },
-      "description" : "A human-readable title and description for an analysis"
-    }
-  }
 }
