@@ -1,26 +1,249 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "version" : "0.1",
+    "version" : "0.2",
     "title" : "Nuve API"
   },
   "host" : "api.nuve.us",
   "basePath" : "/v",
   "tags" : [ {
-    "name" : "assets"
+    "name" : "geozones"
   }, {
     "name" : "orgs"
   }, {
     "name" : "authorizations"
   }, {
-    "name" : "policies"
+    "name" : "analyses"
   }, {
-    "name" : "geozones"
+    "name" : "assets"
   }, {
     "name" : "events"
+  }, {
+    "name" : "policies"
+  }, {
+    "name" : "activations"
   } ],
   "schemes" : [ "https" ],
   "paths" : {
+    "/activations" : {
+      "get" : {
+        "tags" : [ "activations" ],
+        "summary" : "Retrieve all activations the authenticated user can access",
+        "description" : "",
+        "operationId" : "getActivations",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Activations"
+            }
+          }
+        }
+      }
+    },
+    "/activations/{id}" : {
+      "get" : {
+        "tags" : [ "activations" ],
+        "summary" : "Retrieve an activation given its identifier",
+        "description" : "",
+        "operationId" : "getActivation",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Activations"
+            }
+          },
+          "404" : {
+            "description" : "Activation not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/activations/{id}/analyses" : {
+      "get" : {
+        "tags" : [ "activations" ],
+        "summary" : "Retrieve an activation's analyses given its identifier",
+        "description" : "",
+        "operationId" : "getActivationAnalyses",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Analyses"
+            }
+          },
+          "404" : {
+            "description" : "Activation not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/activations/{id}/event" : {
+      "get" : {
+        "tags" : [ "activations" ],
+        "summary" : "Retrieve an activation's events given its identifier",
+        "description" : "",
+        "operationId" : "getActivationEvent",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/LocationEvents"
+            }
+          },
+          "404" : {
+            "description" : "Activation not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/analyses" : {
+      "get" : {
+        "tags" : [ "analyses" ],
+        "summary" : "Retrieve all analyses the authenticated user can access",
+        "description" : "",
+        "operationId" : "getAnalyses",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Analyses"
+            }
+          }
+        }
+      }
+    },
+    "/analyses/{id}" : {
+      "get" : {
+        "tags" : [ "analyses" ],
+        "summary" : "Retrieve an analysis by its identifier",
+        "description" : "",
+        "operationId" : "getAnalysis",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the analysis",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Analyses"
+            }
+          },
+          "404" : {
+            "description" : "Analysis not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/analyses/{id}/activations" : {
+      "get" : {
+        "tags" : [ "analyses" ],
+        "summary" : "Retrieve an analysis' activation given the identifier of the analysis",
+        "description" : "",
+        "operationId" : "getAnalysisActivations",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the analysis",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Activations"
+            }
+          },
+          "404" : {
+            "description" : "Analysis not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/analyses/{id}/asset" : {
+      "get" : {
+        "tags" : [ "analyses" ],
+        "summary" : "Retrieve an analysis' asset by the identifier of the analysis",
+        "description" : "",
+        "operationId" : "getAnalysisAsset",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the analysis",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Assets"
+            }
+          },
+          "404" : {
+            "description" : "Analysis not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
     "/assets" : {
       "get" : {
         "tags" : [ "assets" ],
@@ -352,9 +575,15 @@
           "type" : "array",
           "collectionFormat" : "multi"
         }, {
-          "name" : "interval",
+          "name" : "filter[generated]",
           "in" : "query",
-          "description" : "ISO-8601 based interval for the time period over which to retrieve events",
+          "description" : "ISO-8601 based interval for the time period, based upon the generated date and time of the event, over which to retrieve events",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "filter[created]",
+          "in" : "query",
+          "description" : "ISO-8601 based interval for the time period, based upon the creation date and time, over which to retrieve events",
           "required" : false,
           "type" : "string"
         } ],
@@ -394,6 +623,12 @@
             "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/LocationEvents"
+            }
+          },
+          "422" : {
+            "description" : "Invalid events",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
             }
           }
         }
@@ -670,6 +905,28 @@
             }
           }
         }
+      },
+      "post" : {
+        "tags" : [ "orgs" ],
+        "summary" : "Create new organizations",
+        "description" : "",
+        "operationId" : "createOrgs",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Orgs"
+            }
+          },
+          "422" : {
+            "description" : "Invalid organizations",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
       }
     },
     "/orgs/{id}" : {
@@ -678,6 +935,68 @@
         "summary" : "Retrieve an organization by its identifier",
         "description" : "",
         "operationId" : "getOrg",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the organization",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Orgs"
+            }
+          },
+          "404" : {
+            "description" : "Org not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{id}/children" : {
+      "get" : {
+        "tags" : [ "orgs" ],
+        "summary" : "Retrieve an organization's children by its identifier",
+        "description" : "",
+        "operationId" : "getOrgChildren",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the organization",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Orgs"
+            }
+          },
+          "404" : {
+            "description" : "Org not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{id}/parent" : {
+      "get" : {
+        "tags" : [ "orgs" ],
+        "summary" : "Retrieve an organization's parent by its identifier",
+        "description" : "",
+        "operationId" : "getOrgParent",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -917,6 +1236,168 @@
     }
   },
   "definitions" : {
+    "Activation" : {
+      "required" : [ "created", "generated", "name", "value" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Sensor or sensor group which triggered the activation"
+        },
+        "value" : {
+          "description" : "Abnormal value for the activation",
+          "$ref" : "#/definitions/Number"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the Nuve platform received the activation"
+        },
+        "generated" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the activation was observed"
+        }
+      },
+      "description" : "Attributes for the activation"
+    },
+    "ActivationData" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
+          "readOnly" : true
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "object type",
+          "readOnly" : true
+        },
+        "attributes" : {
+          "$ref" : "#/definitions/Activation"
+        },
+        "relationships" : {
+          "$ref" : "#/definitions/ActivationRelationships"
+        }
+      },
+      "description" : "When an event shows the metric for a sensor outside of its normal range an activation is created"
+    },
+    "ActivationRelationships" : {
+      "required" : [ "analyses", "event" ],
+      "properties" : {
+        "event" : {
+          "description" : "Returns the event which triggered this activation",
+          "$ref" : "#/definitions/OneRelationship"
+        },
+        "analyses" : {
+          "description" : "Return the analyses which reference this activation",
+          "$ref" : "#/definitions/ManyRelationship"
+        }
+      },
+      "description" : "Relationships for the activation"
+    },
+    "Activations" : {
+      "properties" : {
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ActivationData"
+          }
+        }
+      },
+      "description" : "A collection of activations"
+    },
+    "Analyses" : {
+      "properties" : {
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AnalysisData"
+          }
+        }
+      },
+      "description" : "A collection of analyses data"
+    },
+    "Analysis" : {
+      "required" : [ "category", "start", "status" ],
+      "properties" : {
+        "category" : {
+          "type" : "string",
+          "description" : "Short string to used to collate analyses into a category",
+          "enum" : [ "fuel_refill" ]
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "Whether or not the analysis has been completed yet",
+          "enum" : [ "OPEN", "CLOSED", "open", "closed" ]
+        },
+        "end" : {
+          "description" : "Date, time, location, speed and heading of the asset at the end point of the analysis, if the analysis has been closed",
+          "$ref" : "#/definitions/Optional"
+        },
+        "summary" : {
+          "type" : "array",
+          "description" : "Human-readable titles and descriptions for an analysis",
+          "items" : {
+            "$ref" : "#/definitions/Summary"
+          }
+        },
+        "start" : {
+          "description" : "Date, time, location, speed and heading of the asset at the starting point of the analysis",
+          "$ref" : "#/definitions/Checkpoint"
+        },
+        "modified" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
+          "readOnly" : true
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        }
+      },
+      "description" : "Attributes for the analysis"
+    },
+    "AnalysisData" : {
+      "required" : [ "attributes", "relationships" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
+          "readOnly" : true
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "object type",
+          "readOnly" : true
+        },
+        "attributes" : {
+          "description" : "Attributes for the analysis",
+          "$ref" : "#/definitions/Analysis"
+        },
+        "relationships" : {
+          "description" : "Relationships for the analysis",
+          "$ref" : "#/definitions/AnalysisRelationships"
+        }
+      },
+      "description" : "An analysis of a collection of event data related to a particular asset"
+    },
+    "AnalysisRelationships" : {
+      "required" : [ "activations", "asset" ],
+      "properties" : {
+        "activations" : {
+          "description" : "The activations which contribute to this analysis",
+          "$ref" : "#/definitions/ManyRelationship"
+        },
+        "asset" : {
+          "description" : "The asset that triggered the analysis",
+          "$ref" : "#/definitions/OneRelationship"
+        }
+      },
+      "description" : "Relationships for the analysis"
+    },
     "Asset" : {
       "required" : [ "classification", "name" ],
       "properties" : {
@@ -1102,17 +1583,7 @@
       }
     },
     "Cellular" : {
-      "required" : [ "sent" ],
       "properties" : {
-        "status" : {
-          "type" : "string",
-          "description" : "Status of the cellular connection, roaming or not roaming"
-        },
-        "sent" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "The date and time at which the event was sent"
-        },
         "signal" : {
           "type" : "number",
           "format" : "double",
@@ -1121,6 +1592,38 @@
         "carrier" : {
           "type" : "string",
           "description" : "Carrier of the cellular data"
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "Status of the cellular connection, roaming or not roaming"
+        }
+      }
+    },
+    "Checkpoint" : {
+      "required" : [ "coordinates", "date" ],
+      "properties" : {
+        "date" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time of the analysis checkpoint"
+        },
+        "heading" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Heading of the asset, represented as degrees from true north"
+        },
+        "speed" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
+        },
+        "coordinates" : {
+          "type" : "array",
+          "description" : "Coordinates of the location for the asset, provided as a point in GeoJSON format",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
         }
       }
     },
@@ -1251,51 +1754,62 @@
           "format" : "date-time",
           "description" : "The date and time at which the GPS fix was acquired"
         },
-        "satellites" : {
-          "type" : "integer",
-          "format" : "int32",
-          "description" : "The number of satellites used to acquire a GPS fix."
-        },
         "hdop" : {
           "type" : "number",
           "format" : "double",
           "description" : "The GPS horizontal dilution of precision"
+        },
+        "satellites" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The number of satellites used to acquire a GPS fix."
         }
       }
     },
     "Location" : {
       "required" : [ "coordinates" ],
       "properties" : {
-        "coordinates" : {
-          "type" : "array",
-          "description" : "Coordinates for this events provided as a point in GeoJSON format",
-          "items" : {
-            "type" : "number",
-            "format" : "double"
-          }
+        "heading" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Heading of the asset, represented as degrees from true north"
         },
         "speed" : {
           "type" : "number",
           "format" : "double",
           "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
         },
-        "heading" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Heading of the asset, represented as degrees from true north"
+        "coordinates" : {
+          "type" : "array",
+          "description" : "Coordinates of the location for the asset, provided as a point in GeoJSON format",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
         }
       }
     },
     "LocationEvent" : {
-      "required" : [ "location" ],
+      "required" : [ "generated", "location" ],
       "properties" : {
         "location" : {
-          "description" : "Location, speed and heading of the asset at the time this event",
+          "description" : "Location, speed and heading of the asset at the time of this event",
           "$ref" : "#/definitions/Location"
         },
         "gps" : {
           "description" : "When originating from a GPS device, contains information about the GPS lock",
           "$ref" : "#/definitions/Gps"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the Nuve API received the event",
+          "readOnly" : true
+        },
+        "generated" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time at which this event was observed or generated"
         },
         "cellular" : {
           "description" : "When originating from a device with a cellular modem, contains information about the cellular connection",
@@ -1308,18 +1822,6 @@
             "type" : "number",
             "format" : "double"
           }
-        },
-        "modified" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was originally created",
-          "readOnly" : true
         }
       }
     },
@@ -1346,12 +1848,12 @@
     "LocationEventRelationships" : {
       "required" : [ "asset" ],
       "properties" : {
-        "asset" : {
-          "description" : "The asset which generated this event",
-          "$ref" : "#/definitions/OneRelationship"
-        },
         "operator" : {
           "description" : "The operator, in the case of a truck, the driver, for this asset",
+          "$ref" : "#/definitions/OneRelationship"
+        },
+        "asset" : {
+          "description" : "The asset which generated this event",
           "$ref" : "#/definitions/OneRelationship"
         }
       }
@@ -1383,6 +1885,9 @@
       },
       "description" : "Represents a relationship between one entity to one to many other entities."
     },
+    "Number" : {
+      "type" : "object"
+    },
     "OneRelationship" : {
       "properties" : {
         "data" : {
@@ -1395,6 +1900,14 @@
         }
       },
       "description" : "Represents a relationship between two different entities."
+    },
+    "Optional" : {
+      "properties" : {
+        "present" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
     },
     "Org" : {
       "required" : [ "name" ],
@@ -1439,26 +1952,48 @@
       "description" : "Attributes for an organization"
     },
     "OrgData" : {
+      "required" : [ "attributes" ],
       "properties" : {
-        "type" : {
-          "type" : "string",
-          "description" : "object type",
-          "readOnly" : true
-        },
-        "links" : {
-          "description" : "Link to retrieve this organization",
-          "$ref" : "#/definitions/SelfLink"
-        },
         "id" : {
           "type" : "string",
           "description" : "unique identifier",
           "readOnly" : true
         },
+        "type" : {
+          "type" : "string",
+          "description" : "object type",
+          "readOnly" : true
+        },
         "attributes" : {
+          "description" : "Attributes for the org",
           "$ref" : "#/definitions/Org"
+        },
+        "links" : {
+          "description" : "Link to retrieve the organization",
+          "readOnly" : true,
+          "$ref" : "#/definitions/SelfLink"
+        },
+        "relationships" : {
+          "description" : "Link to retrieve the organization",
+          "readOnly" : true,
+          "$ref" : "#/definitions/OrgRelationships"
         }
       },
       "description" : "An organization which contains assets, geozones, and users"
+    },
+    "OrgRelationships" : {
+      "properties" : {
+        "parent" : {
+          "description" : "When available, the parent of the organization",
+          "$ref" : "#/definitions/OneRelationship"
+        },
+        "children" : {
+          "description" : "Children of the organization. Child organizations can be managed by the parent organization",
+          "readOnly" : true,
+          "$ref" : "#/definitions/ManyRelationship"
+        }
+      },
+      "description" : "Relationships for an organization"
     },
     "Orgs" : {
       "properties" : {
@@ -1531,19 +2066,20 @@
       "description" : "ID, type and relationships for a policy"
     },
     "PolicyRelationships" : {
+      "required" : [ "asset" ],
       "properties" : {
         "geozone" : {
           "description" : "The geozone to which the policy is attached",
           "$ref" : "#/definitions/OneRelationship"
         },
-        "asset" : {
-          "description" : "When set, defines the asset which this policy affects",
-          "$ref" : "#/definitions/ManyRelationship"
-        },
         "authorizations" : {
           "description" : "Authorizations which have been put into effect by this policy. When an asset enters a geozonea corresponding authorization is created. When it leaves the geozone, it is removed",
           "readOnly" : true,
           "$ref" : "#/definitions/ManyRelationship"
+        },
+        "asset" : {
+          "description" : "When set, defines the asset which this policy affects",
+          "$ref" : "#/definitions/OneRelationship"
         }
       },
       "description" : "Relationships for a policy"
@@ -1582,6 +2118,24 @@
           "type" : "string"
         }
       }
+    },
+    "Summary" : {
+      "required" : [ "description", "language", "title" ],
+      "properties" : {
+        "language" : {
+          "type" : "string",
+          "description" : "Language code for the language of the title and description"
+        },
+        "title" : {
+          "type" : "string",
+          "description" : "A short title for the analysis"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "A longer description, generally meant to provide the who, what and where for the analysis"
+        }
+      },
+      "description" : "A human-readable title and description for an analysis"
     }
   }
 }
