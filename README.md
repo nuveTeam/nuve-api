@@ -2,6 +2,14 @@
 
 ## Changelog
 
+*0.4*:
+* Added /subscriptions
+  * Subscriptions are used to determine the current status of organizations, with respect to whether or not they are active
+  * Relationships for retrieving subscriptions based upon the organization and to retrieve an organization based upon its subscriptions
+* Add org manager and billing contact
+  * Org manager is the user in the platform that is the point of contact for who manages the relationship with Nuve or the parent of the organization.
+  * Billing contact is the person in charge of billing questions which are directed to an organization
+
 *0.3*:
 * Doc is now generated using final release of Swagger 1.5.0
 * Updates to organization endpoints:
