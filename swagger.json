@@ -1,13 +1,13 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "version" : "0.3",
+    "version" : "0.4",
     "title" : "Nuve API"
   },
   "host" : "api.nuve.us",
   "basePath" : "/v",
   "tags" : [ {
-    "name" : "authorizations"
+    "name" : "activations"
   }, {
     "name" : "policies"
   }, {
@@ -15,15 +15,19 @@
   }, {
     "name" : "orgs"
   }, {
+    "name" : "authorizations"
+  }, {
     "name" : "assets"
   }, {
-    "name" : "events"
+    "name" : "geozones"
   }, {
     "name" : "users"
   }, {
-    "name" : "activations"
+    "name" : "events"
   }, {
-    "name" : "geozones"
+    "name" : "subscriptions"
+  }, {
+    "name" : "login"
   } ],
   "schemes" : [ "https" ],
   "paths" : {
@@ -902,6 +906,27 @@
         "operationId" : "getOrgs",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "filter[manager]",
+          "in" : "query",
+          "description" : "Identifiers for users which will have the organizations they manage represented in the response",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        }, {
+          "name" : "include",
+          "in" : "query",
+          "description" : "Resources which should be included in the response",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -922,7 +947,7 @@
           "in" : "body",
           "name" : "body",
           "description" : "The org or orgs which will be created",
-          "required" : false,
+          "required" : true,
           "schema" : {
             "$ref" : "#/definitions/Orgs"
           }
@@ -936,6 +961,12 @@
           },
           "400" : {
             "description" : "Invalid request",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          },
+          "409" : {
+            "description" : "Duplicate slug",
             "schema" : {
               "$ref" : "#/definitions/Errors"
             }
@@ -981,7 +1012,7 @@
       },
       "put" : {
         "tags" : [ "orgs" ],
-        "summary" : "Update an existing organizations",
+        "summary" : "Update an existing organization",
         "description" : "",
         "operationId" : "updateOrg",
         "consumes" : [ "application/json" ],
@@ -989,14 +1020,41 @@
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
+          "description" : "The ID of the org which will be updated",
           "required" : true,
           "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "The updated org",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/OrgContainer"
+          }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/OrgContainer"
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          },
+          "404" : {
+            "description" : "Org not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          },
+          "409" : {
+            "description" : "Duplicate slug",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
             }
           },
           "422" : {
@@ -1101,6 +1159,37 @@
         }
       }
     },
+    "/orgs/{id}/manager" : {
+      "get" : {
+        "tags" : [ "orgs" ],
+        "summary" : "Retrieve an organization's manager by the organization identifier",
+        "description" : "",
+        "operationId" : "getOrgManager",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the organization",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/An individual user"
+            }
+          },
+          "404" : {
+            "description" : "Org not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
     "/orgs/{id}/parent" : {
       "get" : {
         "tags" : [ "orgs" ],
@@ -1121,6 +1210,37 @@
             "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Orgs"
+            }
+          },
+          "404" : {
+            "description" : "Org not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{id}/subscriptions" : {
+      "get" : {
+        "tags" : [ "orgs" ],
+        "summary" : "Retrieve an organization's geozones by the org identifier",
+        "description" : "",
+        "operationId" : "getOrgSubscriptions",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id for the organization",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Geozones"
             }
           },
           "404" : {
@@ -1268,7 +1388,7 @@
         "tags" : [ "policies" ],
         "summary" : "Delete a policy by its identifier",
         "description" : "",
-        "operationId" : "deleteAuthorization",
+        "operationId" : "deletePolicy",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -1381,6 +1501,229 @@
         }
       }
     },
+    "/subscriptions" : {
+      "get" : {
+        "tags" : [ "subscriptions" ],
+        "summary" : "Retrieve all subscriptions the authenticated user can access",
+        "description" : "",
+        "operationId" : "getSubscriptions",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "filter[id]",
+          "in" : "query",
+          "description" : "Subscription unique identifiers to filter",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        }, {
+          "name" : "filter[expires]",
+          "in" : "query",
+          "description" : "An ISO-8601 formatted time interval specifying the expiration time to filter",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        }, {
+          "name" : "filter[org]",
+          "in" : "query",
+          "description" : "Orgs to filter; subscriptions for the specified orgs will be represented in the response",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        }, {
+          "name" : "filter[status]",
+          "in" : "query",
+          "description" : "Status for subscriptions to return in the response",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        }, {
+          "name" : "include",
+          "in" : "query",
+          "description" : "Resources which should be included in the response",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Subscriptions"
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "subscriptions" ],
+        "summary" : "Create a new subscription",
+        "description" : "",
+        "operationId" : "createSubscriptions",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "The subscription to create",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/SubscriptionContainer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Subscriptions"
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          },
+          "422" : {
+            "description" : "Invalid subscription",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{id}" : {
+      "get" : {
+        "tags" : [ "subscriptions" ],
+        "summary" : "Retrieve a subscription by its identifier",
+        "description" : "",
+        "operationId" : "getSubscription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Identifier for the subscription",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SubscriptionContainer"
+            }
+          },
+          "404" : {
+            "description" : "Subscription not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "subscriptions" ],
+        "summary" : "Update an existing organization",
+        "description" : "",
+        "operationId" : "updateSubscription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the subscription to be updated",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "The subscription which will be updated",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/SubscriptionContainer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SubscriptionContainer"
+            }
+          },
+          "400" : {
+            "description" : "Invalid request",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          },
+          "404" : {
+            "description" : "Subscription not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          },
+          "422" : {
+            "description" : "Invalid subscription",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{id}/org" : {
+      "get" : {
+        "tags" : [ "subscriptions" ],
+        "summary" : "Retrieve the organization which belongs to the given subscription",
+        "description" : "",
+        "operationId" : "getSubscriptionOrg",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id for the subscription",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/OrgContainer"
+            }
+          },
+          "404" : {
+            "description" : "Subscription not found",
+            "schema" : {
+              "$ref" : "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
     "/users" : {
       "get" : {
         "tags" : [ "users" ],
@@ -1430,7 +1773,7 @@
           "in" : "body",
           "name" : "body",
           "description" : "The user or users which will be created",
-          "required" : false,
+          "required" : true,
           "schema" : {
             "$ref" : "#/definitions/Users"
           }
@@ -1560,14 +1903,14 @@
     "ActivationData" : {
       "type" : "object",
       "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
         "type" : {
           "type" : "string",
           "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
           "readOnly" : true
         },
         "attributes" : {
@@ -1639,6 +1982,14 @@
       },
       "description" : "The address for a place"
     },
+    "An individual user" : {
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "$ref" : "#/definitions/UserData"
+        }
+      }
+    },
     "Analyses" : {
       "type" : "object",
       "properties" : {
@@ -1664,6 +2015,13 @@
           "description" : "Date, time, location, speed and heading of the asset at the end point of the analysis, if the analysis has been closed",
           "$ref" : "#/definitions/Checkpoint"
         },
+        "summary" : {
+          "type" : "array",
+          "description" : "Human-readable titles and descriptions for an analysis",
+          "items" : {
+            "$ref" : "#/definitions/Summary"
+          }
+        },
         "category" : {
           "type" : "string",
           "description" : "Short string to used to collate analyses into a category",
@@ -1672,13 +2030,6 @@
         "start" : {
           "description" : "Date, time, location, speed and heading of the asset at the starting point of the analysis",
           "$ref" : "#/definitions/Checkpoint"
-        },
-        "summary" : {
-          "type" : "array",
-          "description" : "Human-readable titles and descriptions for an analysis",
-          "items" : {
-            "$ref" : "#/definitions/Summary"
-          }
         },
         "modified" : {
           "type" : "string",
@@ -1699,14 +2050,14 @@
       "type" : "object",
       "required" : [ "attributes", "relationships" ],
       "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
         "type" : {
           "type" : "string",
           "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
           "readOnly" : true
         },
         "attributes" : {
@@ -1746,7 +2097,9 @@
         },
         "name" : {
           "type" : "string",
-          "description" : "A short, user-friendly name which will be used to display the resource to the end user"
+          "description" : "A short, user-friendly name which will be used to display the resource to the end user",
+          "minLength" : 3,
+          "maxLength" : 100
         },
         "description" : {
           "type" : "string",
@@ -1754,7 +2107,9 @@
         },
         "slug" : {
           "type" : "string",
-          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource"
+          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource",
+          "minLength" : 3,
+          "maxLength" : 100
         },
         "modified" : {
           "type" : "string",
@@ -1804,6 +2159,11 @@
           "description" : "object type",
           "readOnly" : true
         },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
+          "readOnly" : true
+        },
         "attributes" : {
           "description" : "Attributes for the asset",
           "$ref" : "#/definitions/Asset"
@@ -1812,11 +2172,6 @@
           "description" : "Relationships for the asset",
           "readOnly" : true,
           "$ref" : "#/definitions/AssetRelationships"
-        },
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
         }
       },
       "description" : "ID, type and relationships for an asset"
@@ -1881,14 +2236,14 @@
       "type" : "object",
       "required" : [ "attributes", "relationships" ],
       "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
         "type" : {
           "type" : "string",
           "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
           "readOnly" : true
         },
         "attributes" : {
@@ -1950,10 +2305,15 @@
       "type" : "object",
       "required" : [ "coordinates", "date" ],
       "properties" : {
-        "heading" : {
+        "date" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time of the analysis checkpoint"
+        },
+        "speed" : {
           "type" : "number",
           "format" : "double",
-          "description" : "Heading of the asset, represented as degrees from true north"
+          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
         },
         "coordinates" : {
           "type" : "array",
@@ -1963,15 +2323,10 @@
             "format" : "double"
           }
         },
-        "speed" : {
+        "heading" : {
           "type" : "number",
           "format" : "double",
-          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
-        },
-        "date" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time of the analysis checkpoint"
+          "description" : "Heading of the asset, represented as degrees from true north"
         }
       }
     },
@@ -1983,8 +2338,15 @@
           "readOnly" : true,
           "$ref" : "#/definitions/Source"
         },
+        "code" : {
+          "type" : "string",
+          "description" : "Machine-friendly error code for parsing the error",
+          "readOnly" : true
+        },
         "title" : {
-          "type" : "string"
+          "type" : "string",
+          "description" : "Human-friendly title for the error, describing the problem which occured",
+          "readOnly" : true
         }
       }
     },
@@ -2025,7 +2387,9 @@
         },
         "name" : {
           "type" : "string",
-          "description" : "A short, user-friendly name which will be used to display the resource to the end user"
+          "description" : "A short, user-friendly name which will be used to display the resource to the end user",
+          "minLength" : 3,
+          "maxLength" : 100
         },
         "description" : {
           "type" : "string",
@@ -2033,7 +2397,9 @@
         },
         "slug" : {
           "type" : "string",
-          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource"
+          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource",
+          "minLength" : 3,
+          "maxLength" : 100
         },
         "tags" : {
           "type" : "array",
@@ -2057,14 +2423,14 @@
       "type" : "object",
       "required" : [ "attributes" ],
       "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
         "type" : {
           "type" : "string",
           "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
           "readOnly" : true
         },
         "attributes" : {
@@ -2130,10 +2496,10 @@
       "type" : "object",
       "required" : [ "coordinates" ],
       "properties" : {
-        "heading" : {
+        "speed" : {
           "type" : "number",
           "format" : "double",
-          "description" : "Heading of the asset, represented as degrees from true north"
+          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
         },
         "coordinates" : {
           "type" : "array",
@@ -2143,10 +2509,10 @@
             "format" : "double"
           }
         },
-        "speed" : {
+        "heading" : {
           "type" : "number",
           "format" : "double",
-          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
+          "description" : "Heading of the asset, represented as degrees from true north"
         }
       }
     },
@@ -2295,7 +2661,9 @@
         },
         "name" : {
           "type" : "string",
-          "description" : "A short, user-friendly name which will be used to display the resource to the end user"
+          "description" : "A short, user-friendly name which will be used to display the resource to the end user",
+          "minLength" : 3,
+          "maxLength" : 100
         },
         "description" : {
           "type" : "string",
@@ -2303,11 +2671,19 @@
         },
         "slug" : {
           "type" : "string",
-          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource"
+          "description" : "A short sting which can be used in URLs, in place of the ID to represent the resource",
+          "minLength" : 3,
+          "maxLength" : 100
         },
         "email" : {
           "type" : "string",
           "description" : "Email address for the billing contact"
+        },
+        "contact" : {
+          "type" : "string",
+          "description" : "Name for the billing contact",
+          "minLength" : 0,
+          "maxLength" : 255
         },
         "phone" : {
           "type" : "string",
@@ -2321,6 +2697,11 @@
       "properties" : {
         "data" : {
           "$ref" : "#/definitions/OrgData"
+        },
+        "included" : {
+          "type" : "string",
+          "description" : "included data. When linked documents are requested to be included they will be represented here",
+          "readOnly" : true
         }
       },
       "description" : "An individual org"
@@ -2329,14 +2710,14 @@
       "type" : "object",
       "required" : [ "attributes" ],
       "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
         "type" : {
           "type" : "string",
           "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
           "readOnly" : true
         },
         "attributes" : {
@@ -2368,6 +2749,10 @@
           "readOnly" : true,
           "$ref" : "#/definitions/ManyRelationship"
         },
+        "manager" : {
+          "description" : "A user from the parent organization which manages the organization",
+          "$ref" : "#/definitions/OneRelationship"
+        },
         "geozones" : {
           "description" : "Geozones of the organization. Organization geozones can be managed by the organization",
           "readOnly" : true,
@@ -2394,6 +2779,11 @@
           "items" : {
             "$ref" : "#/definitions/OrgData"
           }
+        },
+        "included" : {
+          "type" : "string",
+          "description" : "included data. When linked documents are requested to be included they will be represented here",
+          "readOnly" : true
         }
       }
     },
@@ -2418,15 +2808,15 @@
           "description" : "Permission, for example fuel or cargo, related to the access which this authorization provides",
           "enum" : [ "fuel", "cargo" ]
         },
-        "mode" : {
-          "type" : "string",
-          "description" : "one_time move denotes that this policy will go into effect exactly one time for the asset which it is attached to after which the policy is considered fulfilled and will no longercreate authorizations",
-          "enum" : [ "one_time", "unlimited" ]
-        },
         "expiration" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Expiration date and time of this policy. At which time all existing authorizations relatedto this policy will be canceled"
+        },
+        "mode" : {
+          "type" : "string",
+          "description" : "one_time move denotes that this policy will go into effect exactly one time for the asset which it is attached to after which the policy is considered fulfilled and will no longercreate authorizations",
+          "enum" : [ "one_time", "unlimited" ]
         },
         "duration" : {
           "type" : "string",
@@ -2439,14 +2829,14 @@
       "type" : "object",
       "required" : [ "attributes" ],
       "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
         "type" : {
           "type" : "string",
           "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
           "readOnly" : true
         },
         "attributes" : {
@@ -2483,13 +2873,13 @@
     "RelationshipLinks" : {
       "type" : "object",
       "properties" : {
-        "related" : {
-          "type" : "string",
-          "description" : "Related link for the relationship"
-        },
         "self" : {
           "type" : "string",
           "description" : "Self link for the relationship"
+        },
+        "related" : {
+          "type" : "string",
+          "description" : "Related link for the relationship"
         }
       },
       "description" : "Links for a relationship."
@@ -2501,14 +2891,14 @@
       "type" : "object",
       "required" : [ "id", "type" ],
       "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
         "type" : {
           "type" : "string",
           "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
           "readOnly" : true
         }
       }
@@ -2524,12 +2914,114 @@
     "Source" : {
       "type" : "object",
       "properties" : {
+        "parameter" : {
+          "type" : "string",
+          "description" : "a string indicating which URI query parameter caused the error"
+        },
         "pointer" : {
           "type" : "string",
           "description" : "a JSON Pointer [RFC6901] to the associated entity in the request document"
         }
       },
       "description" : "The source of the error"
+    },
+    "Subscription" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "description" : "Current status of this subscription",
+          "enum" : [ "inactive", "active", "expired", "terminated" ]
+        },
+        "expires" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the subscription will or has expired"
+        },
+        "modified" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
+          "readOnly" : true
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        }
+      },
+      "description" : "Attributes of a subscription"
+    },
+    "SubscriptionContainer" : {
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "$ref" : "#/definitions/SubscriptionData"
+        },
+        "included" : {
+          "type" : "string",
+          "description" : "included data. When linked documents are requested to be included they will be represented here",
+          "readOnly" : true
+        }
+      }
+    },
+    "SubscriptionData" : {
+      "type" : "object",
+      "required" : [ "attributes" ],
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
+          "readOnly" : true
+        },
+        "attributes" : {
+          "description" : "Attributes for a subscription",
+          "$ref" : "#/definitions/Subscription"
+        },
+        "relationships" : {
+          "description" : "Relationships of a subscription",
+          "readOnly" : true,
+          "$ref" : "#/definitions/SubscriptionRelationships"
+        },
+        "links" : {
+          "description" : "Link to retrieve the subscription",
+          "readOnly" : true,
+          "$ref" : "#/definitions/SelfLink"
+        }
+      },
+      "description" : "Represents the subscription for an org, allowing it to receive data for its assets"
+    },
+    "SubscriptionRelationships" : {
+      "type" : "object",
+      "properties" : {
+        "org" : {
+          "description" : "The org which this subscription belongs to",
+          "$ref" : "#/definitions/OneRelationship"
+        }
+      },
+      "description" : "Relationships of a subscription"
+    },
+    "Subscriptions" : {
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SubscriptionData"
+          }
+        },
+        "included" : {
+          "type" : "string",
+          "description" : "included data. When linked documents are requested to be included they will be represented here",
+          "readOnly" : true
+        }
+      }
     },
     "Summary" : {
       "type" : "object",
@@ -2588,14 +3080,14 @@
       "type" : "object",
       "required" : [ "attributes" ],
       "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "unique identifier",
-          "readOnly" : true
-        },
         "type" : {
           "type" : "string",
           "description" : "object type",
+          "readOnly" : true
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "unique identifier",
           "readOnly" : true
         },
         "attributes" : {
