@@ -7,27 +7,27 @@
   "host" : "api.nuve.us",
   "basePath" : "/v",
   "tags" : [ {
-    "name" : "activations"
-  }, {
     "name" : "policies"
   }, {
     "name" : "analyses"
+  }, {
+    "name" : "subscriptions"
+  }, {
+    "name" : "events"
+  }, {
+    "name" : "activations"
   }, {
     "name" : "orgs"
   }, {
     "name" : "authorizations"
   }, {
-    "name" : "assets"
+    "name" : "login"
   }, {
     "name" : "geozones"
   }, {
+    "name" : "assets"
+  }, {
     "name" : "users"
-  }, {
-    "name" : "events"
-  }, {
-    "name" : "subscriptions"
-  }, {
-    "name" : "login"
   } ],
   "schemes" : [ "https" ],
   "paths" : {
@@ -909,7 +909,7 @@
         "parameters" : [ {
           "name" : "filter[manager]",
           "in" : "query",
-          "description" : "Identifiers for users which will have the organizations they manage represented in the response",
+          "description" : "Only show orgs which are managed by this user",
           "required" : false,
           "type" : "array",
           "items" : {
@@ -1077,7 +1077,7 @@
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "Identifier for the organization",
+          "description" : "The ID of the organization",
           "required" : true,
           "type" : "string"
         } ],
@@ -1139,7 +1139,7 @@
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "Identifier for the organization",
+          "description" : "The ID of the organization",
           "required" : true,
           "type" : "string"
         } ],
@@ -1224,7 +1224,7 @@
     "/orgs/{id}/subscriptions" : {
       "get" : {
         "tags" : [ "orgs" ],
-        "summary" : "Retrieve an organization's geozones by the org identifier",
+        "summary" : "Retrieve an organization's subscriptions by the org identifier",
         "description" : "",
         "operationId" : "getOrgSubscriptions",
         "consumes" : [ "application/json" ],
@@ -1232,7 +1232,7 @@
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "Id for the organization",
+          "description" : "The ID of the organization",
           "required" : true,
           "type" : "string"
         } ],
@@ -1696,7 +1696,7 @@
     "/subscriptions/{id}/org" : {
       "get" : {
         "tags" : [ "subscriptions" ],
-        "summary" : "Retrieve the organization which belongs to the given subscription",
+        "summary" : "Retrieve the org of the given subscription",
         "description" : "",
         "operationId" : "getSubscriptionOrg",
         "consumes" : [ "application/json" ],
@@ -1704,7 +1704,7 @@
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "Id for the subscription",
+          "description" : "The ID of the subscription",
           "required" : true,
           "type" : "string"
         } ],
@@ -1926,13 +1926,13 @@
       "type" : "object",
       "required" : [ "analyses", "event" ],
       "properties" : {
-        "event" : {
-          "description" : "Returns the event which triggered this activation",
-          "$ref" : "#/definitions/OneRelationship"
-        },
         "analyses" : {
           "description" : "Return the analyses which reference this activation",
           "$ref" : "#/definitions/ManyRelationship"
+        },
+        "event" : {
+          "description" : "Returns the event which triggered this activation",
+          "$ref" : "#/definitions/OneRelationship"
         }
       },
       "description" : "Relationships for the activation"
@@ -2011,6 +2011,10 @@
           "description" : "Whether or not the analysis has been completed yet",
           "enum" : [ "open", "closed" ]
         },
+        "start" : {
+          "description" : "Date, time, location, speed and heading of the asset at the starting point of the analysis",
+          "$ref" : "#/definitions/Checkpoint"
+        },
         "end" : {
           "description" : "Date, time, location, speed and heading of the asset at the end point of the analysis, if the analysis has been closed",
           "$ref" : "#/definitions/Checkpoint"
@@ -2027,20 +2031,16 @@
           "description" : "Short string to used to collate analyses into a category",
           "enum" : [ "fuel_refill" ]
         },
-        "start" : {
-          "description" : "Date, time, location, speed and heading of the asset at the starting point of the analysis",
-          "$ref" : "#/definitions/Checkpoint"
+        "created" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
         },
         "modified" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was originally created",
           "readOnly" : true
         }
       },
@@ -2111,16 +2111,16 @@
           "minLength" : 3,
           "maxLength" : 100
         },
-        "modified" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
         "created" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        },
+        "modified" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
           "readOnly" : true
         },
         "tags" : {
@@ -2305,6 +2305,11 @@
       "type" : "object",
       "required" : [ "coordinates", "date" ],
       "properties" : {
+        "heading" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Heading of the asset, represented as degrees from true north"
+        },
         "date" : {
           "type" : "string",
           "format" : "date-time",
@@ -2322,11 +2327,6 @@
             "type" : "number",
             "format" : "double"
           }
-        },
-        "heading" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Heading of the asset, represented as degrees from true north"
         }
       }
     },
@@ -2345,7 +2345,7 @@
         },
         "title" : {
           "type" : "string",
-          "description" : "Human-friendly title for the error, describing the problem which occured",
+          "description" : "Human-friendly title for the error, describing the problem which occurred",
           "readOnly" : true
         }
       }
@@ -2373,16 +2373,16 @@
             "format" : "double"
           }
         },
-        "modified" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
         "created" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        },
+        "modified" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
           "readOnly" : true
         },
         "name" : {
@@ -2475,15 +2475,15 @@
       "type" : "object",
       "required" : [ "fixTime" ],
       "properties" : {
-        "hdop" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "The GPS horizontal dilution of precision"
-        },
         "fixTime" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "The date and time at which the GPS fix was acquired"
+        },
+        "hdop" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "The GPS horizontal dilution of precision"
         },
         "satellites" : {
           "type" : "integer",
@@ -2496,6 +2496,11 @@
       "type" : "object",
       "required" : [ "coordinates" ],
       "properties" : {
+        "heading" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Heading of the asset, represented as degrees from true north"
+        },
         "speed" : {
           "type" : "number",
           "format" : "double",
@@ -2508,11 +2513,6 @@
             "type" : "number",
             "format" : "double"
           }
-        },
-        "heading" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Heading of the asset, represented as degrees from true north"
         }
       }
     },
@@ -2524,24 +2524,24 @@
           "description" : "Location, speed and heading of the asset at the time of this event",
           "$ref" : "#/definitions/Location"
         },
+        "gps" : {
+          "description" : "When originating from a GPS device, contains information about the GPS lock",
+          "$ref" : "#/definitions/Gps"
+        },
         "generated" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Date and time at which this event was observed or generated"
+        },
+        "cellular" : {
+          "description" : "When originating from a device with a cellular modem, contains information about the cellular connection",
+          "$ref" : "#/definitions/Cellular"
         },
         "created" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Date and time when the Nuve API received the event",
           "readOnly" : true
-        },
-        "gps" : {
-          "description" : "When originating from a GPS device, contains information about the GPS lock",
-          "$ref" : "#/definitions/Gps"
-        },
-        "cellular" : {
-          "description" : "When originating from a device with a cellular modem, contains information about the cellular connection",
-          "$ref" : "#/definitions/Cellular"
         },
         "metrics" : {
           "type" : "object",
@@ -2610,13 +2610,13 @@
             "$ref" : "#/definitions/ResourceData"
           }
         },
-        "links" : {
-          "description" : "Links for this relationship",
-          "$ref" : "#/definitions/RelationshipLinks"
-        },
         "meta" : {
           "description" : "Metadata for the relationship",
           "$ref" : "#/definitions/RelationshipMetadata"
+        },
+        "links" : {
+          "description" : "Links for this relationship",
+          "$ref" : "#/definitions/RelationshipLinks"
         }
       },
       "description" : "Represents a relationship between one entity to one to many other entities."
@@ -2628,13 +2628,13 @@
           "description" : "Resource for the relationship",
           "$ref" : "#/definitions/ResourceData"
         },
-        "links" : {
-          "description" : "Links for this relationship",
-          "$ref" : "#/definitions/RelationshipLinks"
-        },
         "meta" : {
           "description" : "Metadata for the relationship",
           "$ref" : "#/definitions/RelationshipMetadata"
+        },
+        "links" : {
+          "description" : "Links for this relationship",
+          "$ref" : "#/definitions/RelationshipLinks"
         }
       },
       "description" : "Represents a relationship between two different entities."
@@ -2647,16 +2647,16 @@
           "description" : "Billing address for the organization",
           "$ref" : "#/definitions/Address"
         },
-        "modified" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
         "created" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        },
+        "modified" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
           "readOnly" : true
         },
         "name" : {
@@ -2679,15 +2679,15 @@
           "type" : "string",
           "description" : "Email address for the billing contact"
         },
+        "phone" : {
+          "type" : "string",
+          "description" : "Phone number for the billing contact"
+        },
         "contact" : {
           "type" : "string",
           "description" : "Name for the billing contact",
           "minLength" : 0,
           "maxLength" : 255
-        },
-        "phone" : {
-          "type" : "string",
-          "description" : "Phone number for the billing contact"
         }
       },
       "description" : "Attributes for an organization"
@@ -2749,10 +2749,6 @@
           "readOnly" : true,
           "$ref" : "#/definitions/ManyRelationship"
         },
-        "manager" : {
-          "description" : "A user from the parent organization which manages the organization",
-          "$ref" : "#/definitions/OneRelationship"
-        },
         "geozones" : {
           "description" : "Geozones of the organization. Organization geozones can be managed by the organization",
           "readOnly" : true,
@@ -2767,6 +2763,10 @@
           "description" : "Assets of the organization. Organization assets can be managed by the organization",
           "readOnly" : true,
           "$ref" : "#/definitions/ManyRelationship"
+        },
+        "manager" : {
+          "description" : "A user from the parent organization which manages the organization",
+          "$ref" : "#/definitions/OneRelationship"
         }
       },
       "description" : "Relationships for an organization"
@@ -2808,6 +2808,10 @@
           "description" : "Permission, for example fuel or cargo, related to the access which this authorization provides",
           "enum" : [ "fuel", "cargo" ]
         },
+        "duration" : {
+          "type" : "string",
+          "description" : "Duration of time that the authorizations created by this policy are effective"
+        },
         "expiration" : {
           "type" : "string",
           "format" : "date-time",
@@ -2817,10 +2821,6 @@
           "type" : "string",
           "description" : "one_time move denotes that this policy will go into effect exactly one time for the asset which it is attached to after which the policy is considered fulfilled and will no longercreate authorizations",
           "enum" : [ "one_time", "unlimited" ]
-        },
-        "duration" : {
-          "type" : "string",
-          "description" : "Duration of time that the authorizations created by this policy are effective"
         }
       },
       "description" : "Attributes for a policy"
@@ -2938,16 +2938,16 @@
           "format" : "date-time",
           "description" : "Date and time when the subscription will or has expired"
         },
-        "modified" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
         "created" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        },
+        "modified" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
           "readOnly" : true
         }
       },
@@ -3061,16 +3061,16 @@
           "type" : "string",
           "description" : "The user's phone number"
         },
-        "modified" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the resource was last modified",
-          "readOnly" : true
-        },
         "created" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Date and time when the resource was originally created",
+          "readOnly" : true
+        },
+        "modified" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the resource was last modified",
           "readOnly" : true
         }
       },
