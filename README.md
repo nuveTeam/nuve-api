@@ -1,6 +1,10 @@
 # nuve-api
 
 ## Changelog
+*0.5*:
+* Added includes for manager and subscriptions to /orgs and /orgs/{id}
+* Changed POST /orgs to only accept an individual org
+* Changed POST /users to only accept an individual user
 
 *0.4*:
 * Added /subscriptions
