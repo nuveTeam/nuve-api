@@ -1,33 +1,33 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "version" : "0.4",
+    "version" : "0.5",
     "title" : "Nuve API"
   },
   "host" : "api.nuve.us",
   "basePath" : "/v",
   "tags" : [ {
+    "name" : "users"
+  }, {
+    "name" : "login"
+  }, {
+    "name" : "authorizations"
+  }, {
     "name" : "policies"
-  }, {
-    "name" : "analyses"
-  }, {
-    "name" : "subscriptions"
-  }, {
-    "name" : "events"
   }, {
     "name" : "activations"
   }, {
     "name" : "orgs"
   }, {
-    "name" : "authorizations"
-  }, {
-    "name" : "login"
+    "name" : "events"
   }, {
     "name" : "geozones"
   }, {
     "name" : "assets"
   }, {
-    "name" : "users"
+    "name" : "subscriptions"
+  }, {
+    "name" : "analyses"
   } ],
   "schemes" : [ "https" ],
   "paths" : {
@@ -923,7 +923,8 @@
           "required" : false,
           "type" : "array",
           "items" : {
-            "type" : "string"
+            "type" : "string",
+            "enum" : [ "manager", "subscriptions" ]
           },
           "collectionFormat" : "multi"
         } ],
@@ -946,17 +947,17 @@
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
-          "description" : "The org or orgs which will be created",
+          "description" : "The org which will be created",
           "required" : true,
           "schema" : {
-            "$ref" : "#/definitions/Orgs"
+            "$ref" : "#/definitions/OrgContainer"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Orgs"
+              "$ref" : "#/definitions/OrgContainer"
             }
           },
           "400" : {
@@ -994,6 +995,17 @@
           "description" : "Identifier for the organization",
           "required" : true,
           "type" : "string"
+        }, {
+          "name" : "include",
+          "in" : "query",
+          "description" : "Resources which should be included in the response",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "manager", "subscriptions" ]
+          },
+          "collectionFormat" : "multi"
         } ],
         "responses" : {
           "200" : {
@@ -1178,7 +1190,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/An individual user"
+              "$ref" : "#/definitions/UserContainer"
             }
           },
           "404" : {
@@ -1232,7 +1244,7 @@
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "The ID of the organization",
+          "description" : "ID for the organization",
           "required" : true,
           "type" : "string"
         } ],
@@ -1240,7 +1252,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Geozones"
+              "$ref" : "#/definitions/Subscriptions"
             }
           },
           "404" : {
@@ -1772,17 +1784,17 @@
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
-          "description" : "The user or users which will be created",
+          "description" : "The user which will be created",
           "required" : true,
           "schema" : {
-            "$ref" : "#/definitions/Users"
+            "$ref" : "#/definitions/UserContainer"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Users"
+              "$ref" : "#/definitions/UserContainer"
             }
           },
           "400" : {
@@ -1887,15 +1899,15 @@
           "format" : "double",
           "description" : "Abnormal value for the activation"
         },
-        "generated" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the activation was observed"
-        },
         "created" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Date and time when the Nuve platform received the activation"
+        },
+        "generated" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the activation was observed"
         }
       },
       "description" : "Attributes for the activation"
@@ -1926,13 +1938,13 @@
       "type" : "object",
       "required" : [ "analyses", "event" ],
       "properties" : {
-        "analyses" : {
-          "description" : "Return the analyses which reference this activation",
-          "$ref" : "#/definitions/ManyRelationship"
-        },
         "event" : {
           "description" : "Returns the event which triggered this activation",
           "$ref" : "#/definitions/OneRelationship"
+        },
+        "analyses" : {
+          "description" : "Return the analyses which reference this activation",
+          "$ref" : "#/definitions/ManyRelationship"
         }
       },
       "description" : "Relationships for the activation"
@@ -1982,14 +1994,6 @@
       },
       "description" : "The address for a place"
     },
-    "An individual user" : {
-      "type" : "object",
-      "properties" : {
-        "data" : {
-          "$ref" : "#/definitions/UserData"
-        }
-      }
-    },
     "Analyses" : {
       "type" : "object",
       "properties" : {
@@ -2011,12 +2015,17 @@
           "description" : "Whether or not the analysis has been completed yet",
           "enum" : [ "open", "closed" ]
         },
-        "start" : {
-          "description" : "Date, time, location, speed and heading of the asset at the starting point of the analysis",
-          "$ref" : "#/definitions/Checkpoint"
-        },
         "end" : {
           "description" : "Date, time, location, speed and heading of the asset at the end point of the analysis, if the analysis has been closed",
+          "$ref" : "#/definitions/Checkpoint"
+        },
+        "category" : {
+          "type" : "string",
+          "description" : "Short string to used to collate analyses into a category",
+          "enum" : [ "fuel_refill" ]
+        },
+        "start" : {
+          "description" : "Date, time, location, speed and heading of the asset at the starting point of the analysis",
           "$ref" : "#/definitions/Checkpoint"
         },
         "summary" : {
@@ -2025,11 +2034,6 @@
           "items" : {
             "$ref" : "#/definitions/Summary"
           }
-        },
-        "category" : {
-          "type" : "string",
-          "description" : "Short string to used to collate analyses into a category",
-          "enum" : [ "fuel_refill" ]
         },
         "created" : {
           "type" : "string",
@@ -2305,20 +2309,10 @@
       "type" : "object",
       "required" : [ "coordinates", "date" ],
       "properties" : {
-        "heading" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Heading of the asset, represented as degrees from true north"
-        },
         "date" : {
           "type" : "string",
           "format" : "date-time",
           "description" : "Date and time of the analysis checkpoint"
-        },
-        "speed" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
         },
         "coordinates" : {
           "type" : "array",
@@ -2327,6 +2321,16 @@
             "type" : "number",
             "format" : "double"
           }
+        },
+        "speed" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
+        },
+        "heading" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Heading of the asset, represented as degrees from true north"
         }
       }
     },
@@ -2347,6 +2351,12 @@
           "type" : "string",
           "description" : "Human-friendly title for the error, describing the problem which occurred",
           "readOnly" : true
+        },
+        "meta" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object"
+          }
         }
       }
     },
@@ -2475,15 +2485,15 @@
       "type" : "object",
       "required" : [ "fixTime" ],
       "properties" : {
-        "fixTime" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "The date and time at which the GPS fix was acquired"
-        },
         "hdop" : {
           "type" : "number",
           "format" : "double",
           "description" : "The GPS horizontal dilution of precision"
+        },
+        "fixTime" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The date and time at which the GPS fix was acquired"
         },
         "satellites" : {
           "type" : "integer",
@@ -2496,16 +2506,6 @@
       "type" : "object",
       "required" : [ "coordinates" ],
       "properties" : {
-        "heading" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Heading of the asset, represented as degrees from true north"
-        },
-        "speed" : {
-          "type" : "number",
-          "format" : "double",
-          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
-        },
         "coordinates" : {
           "type" : "array",
           "description" : "Coordinates of the location for the asset, provided as a point in GeoJSON format",
@@ -2513,6 +2513,16 @@
             "type" : "number",
             "format" : "double"
           }
+        },
+        "speed" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Speed of the asset, represented as kilometers per hour (KPH)"
+        },
+        "heading" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Heading of the asset, represented as degrees from true north"
         }
       }
     },
@@ -2528,11 +2538,6 @@
           "description" : "When originating from a GPS device, contains information about the GPS lock",
           "$ref" : "#/definitions/Gps"
         },
-        "generated" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time at which this event was observed or generated"
-        },
         "cellular" : {
           "description" : "When originating from a device with a cellular modem, contains information about the cellular connection",
           "$ref" : "#/definitions/Cellular"
@@ -2542,6 +2547,11 @@
           "format" : "date-time",
           "description" : "Date and time when the Nuve API received the event",
           "readOnly" : true
+        },
+        "generated" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time at which this event was observed or generated"
         },
         "metrics" : {
           "type" : "object",
@@ -2610,13 +2620,13 @@
             "$ref" : "#/definitions/ResourceData"
           }
         },
-        "meta" : {
-          "description" : "Metadata for the relationship",
-          "$ref" : "#/definitions/RelationshipMetadata"
-        },
         "links" : {
           "description" : "Links for this relationship",
           "$ref" : "#/definitions/RelationshipLinks"
+        },
+        "meta" : {
+          "description" : "Metadata for the relationship",
+          "$ref" : "#/definitions/RelationshipMetadata"
         }
       },
       "description" : "Represents a relationship between one entity to one to many other entities."
@@ -2628,13 +2638,13 @@
           "description" : "Resource for the relationship",
           "$ref" : "#/definitions/ResourceData"
         },
-        "meta" : {
-          "description" : "Metadata for the relationship",
-          "$ref" : "#/definitions/RelationshipMetadata"
-        },
         "links" : {
           "description" : "Links for this relationship",
           "$ref" : "#/definitions/RelationshipLinks"
+        },
+        "meta" : {
+          "description" : "Metadata for the relationship",
+          "$ref" : "#/definitions/RelationshipMetadata"
         }
       },
       "description" : "Represents a relationship between two different entities."
@@ -2679,15 +2689,15 @@
           "type" : "string",
           "description" : "Email address for the billing contact"
         },
-        "phone" : {
-          "type" : "string",
-          "description" : "Phone number for the billing contact"
-        },
         "contact" : {
           "type" : "string",
           "description" : "Name for the billing contact",
           "minLength" : 0,
           "maxLength" : 255
+        },
+        "phone" : {
+          "type" : "string",
+          "description" : "Phone number for the billing contact"
         }
       },
       "description" : "Attributes for an organization"
@@ -2754,6 +2764,15 @@
           "readOnly" : true,
           "$ref" : "#/definitions/ManyRelationship"
         },
+        "manager" : {
+          "description" : "A user from the parent organization which manages the organization",
+          "$ref" : "#/definitions/OneRelationship"
+        },
+        "subscriptions" : {
+          "description" : "Subscriptions of the organization",
+          "readOnly" : true,
+          "$ref" : "#/definitions/ManyRelationship"
+        },
         "users" : {
           "description" : "Users of the organization. Organization users can be managed by the organization",
           "readOnly" : true,
@@ -2763,10 +2782,6 @@
           "description" : "Assets of the organization. Organization assets can be managed by the organization",
           "readOnly" : true,
           "$ref" : "#/definitions/ManyRelationship"
-        },
-        "manager" : {
-          "description" : "A user from the parent organization which manages the organization",
-          "$ref" : "#/definitions/OneRelationship"
         }
       },
       "description" : "Relationships for an organization"
@@ -2808,10 +2823,6 @@
           "description" : "Permission, for example fuel or cargo, related to the access which this authorization provides",
           "enum" : [ "fuel", "cargo" ]
         },
-        "duration" : {
-          "type" : "string",
-          "description" : "Duration of time that the authorizations created by this policy are effective"
-        },
         "expiration" : {
           "type" : "string",
           "format" : "date-time",
@@ -2821,6 +2832,10 @@
           "type" : "string",
           "description" : "one_time move denotes that this policy will go into effect exactly one time for the asset which it is attached to after which the policy is considered fulfilled and will no longercreate authorizations",
           "enum" : [ "one_time", "unlimited" ]
+        },
+        "duration" : {
+          "type" : "string",
+          "description" : "Duration of time that the authorizations created by this policy are effective"
         }
       },
       "description" : "Attributes for a policy"
@@ -2933,11 +2948,6 @@
           "description" : "Current status of this subscription",
           "enum" : [ "inactive", "active", "expired", "terminated" ]
         },
-        "expires" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date and time when the subscription will or has expired"
-        },
         "created" : {
           "type" : "string",
           "format" : "date-time",
@@ -2949,6 +2959,11 @@
           "format" : "date-time",
           "description" : "Date and time when the resource was last modified",
           "readOnly" : true
+        },
+        "expires" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Date and time when the subscription will or has expired"
         }
       },
       "description" : "Attributes of a subscription"
@@ -3076,6 +3091,20 @@
       },
       "description" : "Attributes for a user"
     },
+    "UserContainer" : {
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "$ref" : "#/definitions/UserData"
+        },
+        "included" : {
+          "type" : "string",
+          "description" : "included data. When linked documents are requested to be included they will be represented here",
+          "readOnly" : true
+        }
+      },
+      "description" : "An individual user"
+    },
     "UserData" : {
       "type" : "object",
       "required" : [ "attributes" ],
@@ -3125,6 +3154,11 @@
           "items" : {
             "$ref" : "#/definitions/UserData"
           }
+        },
+        "included" : {
+          "type" : "string",
+          "description" : "included data. When linked documents are requested to be included they will be represented here",
+          "readOnly" : true
         }
       }
     }
